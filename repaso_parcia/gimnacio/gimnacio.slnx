@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="libreria_gimnacio/libreria_gimnacio.csproj" />
+  <Project Path="servicios_gimnacio/servicios_gimnacio.csproj" />
+</Solution>
