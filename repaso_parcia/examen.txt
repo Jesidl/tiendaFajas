@@ -1,0 +1,64 @@
+ 
+
+		//conexiones//
+public Notas Insertar(Notas entidad)
+ {
+     // Hacer calculo o operaciones
+
+     this.conexion.Materias!.Add(entidad!._Materia!);  ------------ 
+     this.conexion.Estudiantes!.Add(entidad!._Estudiante!);--------------
+
+     this.conexion.Notas!.Add(entidad!);
+     this.conexion.SaveChanges();
+     return entidad;
+ } 
+
+    public Materias Insertar(Materias entidad)
+    {
+        // Hacer calculo o operaciones
+
+        this.conexion.Materias!.Add(entidad!);-----------
+        this.conexion.SaveChanges();
+        return entidad;
+    }
+}
+
+
+
+
+
+
+
+		//controller//
+
+    [HttpGet]
+    public Notas Parcial()
+    {
+        var entidad = new Notas();
+        entidad._Estudiante = new Estudiantes(); -------------------
+        entidad._Materia = new Materias();------------------
+        return this.INotasAplicacion.Insertar(entidad);-----------------
+    }
+}
+
+
+
+    [HttpGet]
+    public IEnumerable<Estudiantes> Get()
+    {
+        return this.IEstudiantesAplicacion.Consultar();--------------
+    }
+
+    [HttpPost]-----------------
+    public  Estudiantes  Insertar(Estudiantes entidad)
+    {
+        return this.IEstudiantesAplicacion.Insertar(entidad);-----------------
+    }
+
+
+   
+}
+
+
+
+

@@ -1,0 +1,73 @@
+@servicios_tienda_HostAddress = http://localhost:5181
+
+### 1. Crear venta de prueba (cliente + producto nuevos)
+GET {{servicios_tienda_HostAddress}}/Ventas/Parcial
+
+### 2. Consultar ventas (con cliente y producto)
+GET {{servicios_tienda_HostAddress}}/Ventas
+
+### 3. Consultar clientes activos
+GET {{servicios_tienda_HostAddress}}/Clientes
+
+### 4. Crear un cliente
+POST {{servicios_tienda_HostAddress}}/Clientes
+Content-Type: application/json
+
+{
+  "cedula": "2002",
+  "nombre": "Maria",
+  "telefono": "3109876543",
+  "activo": true
+}
+
+### 5. Crear un producto
+POST {{servicios_tienda_HostAddress}}/Productos
+Content-Type: application/json
+
+{
+  "codigo": "P002",
+  "nombre": "Faja reductora",
+  "precio": 80000
+}
+
+### 6. Crear una venta SOLO con Ids (el total lo calcula la librería)
+POST {{servicios_tienda_HostAddress}}/Ventas
+Content-Type: application/json
+
+{
+  "cliente": 1,
+  "producto": 1,
+  "fecha": "2026-10-07T00:00:00",
+  "cantidad": 2
+}
+
+### 7. Probar validación (cantidad 0 -> debe dar error)
+POST {{servicios_tienda_HostAddress}}/Ventas
+Content-Type: application/json
+
+{
+  "cliente": 1,
+  "producto": 1,
+  "fecha": "2026-10-07T00:00:00",
+  "cantidad": 0
+}
+
+### 8. Actualizar un cliente (se manda el objeto COMPLETO con su id)
+PUT {{servicios_tienda_HostAddress}}/Clientes
+Content-Type: application/json
+
+{
+  "id": 1,
+  "cedula": "1001",
+  "nombre": "Pepito Perez",
+  "telefono": "3001234567",
+  "activo": true
+}
+
+### 9. Borrar una venta (basta con el id)
+DELETE {{servicios_tienda_HostAddress}}/Ventas
+Content-Type: application/json
+
+{
+  "id": 1
+}

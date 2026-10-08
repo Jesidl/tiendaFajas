@@ -1,0 +1,65 @@
+@host = http://localhost:5205
+
+### 1. Cuenta de prueba: cliente nuevo + ahorros con 500000 (crea movimiento Apertura)
+GET {{host}}/Cuentas/Parcial
+
+### 2. Retiro de prueba en la cuenta 1: 100000 + 400 de impuesto
+GET {{host}}/Movimientos/Parcial/1
+
+### 3. Extracto de la cuenta 1 (reporte / DTO)
+GET {{host}}/Movimientos/Extracto/1
+
+### 4. Clientes con sus cuentas (Include de lista)
+GET {{host}}/Clientes
+
+### 5. Movimientos con cuenta y cliente (ThenInclude)
+GET {{host}}/Movimientos
+
+### 6. Deposito
+POST {{host}}/Movimientos
+Content-Type: application/json
+
+{
+  "cuenta": 1,
+  "tipo": "Deposito",
+  "valor": 250000,
+  "descripcion": "Consignacion"
+}
+
+### 7. Retiro mayor al saldo -> ERROR saldo insuficiente
+POST {{host}}/Movimientos
+Content-Type: application/json
+
+{
+  "cuenta": 1,
+  "tipo": "Retiro",
+  "valor": 99999999
+}
+
+### 8. Abrir cuenta corriente para el cliente 1
+POST {{host}}/Cuentas
+Content-Type: application/json
+
+{
+  "cliente": 1,
+  "tipo": "Corriente",
+  "saldo": 0
+}
+
+### 9. Intentar cambiar el saldo por PUT -> se IGNORA (campo protegido). Solo cambia "activa"
+PUT {{host}}/Cuentas
+Content-Type: application/json
+
+{
+  "id": 1,
+  "saldo": 999999999,
+  "activa": false
+}
+
+### 10. Borrar un movimiento -> ERROR (operacion prohibida)
+DELETE {{host}}/Movimientos
+Content-Type: application/json
+
+{
+  "id": 1
+}

@@ -1,0 +1,57 @@
+@host = http://localhost:5207
+
+### 1. Entrada de prueba (entro hace 2h10m) con carro y celda nuevos
+GET {{host}}/Registros/Parcial
+
+### 2. Darle salida -> 131 min = 3 horas = 12000 (cambia el id)
+PUT {{host}}/Registros/Salida/1
+
+### 3. Recaudo de hoy (agrupado por tipo)
+GET {{host}}/Registros/Recaudo
+
+### 4. Crear celdas
+POST {{host}}/Celdas
+Content-Type: application/json
+
+{ "codigo": "a-01", "tipo": "Carro" }
+
+###
+POST {{host}}/Celdas
+Content-Type: application/json
+
+{ "codigo": "m-01", "tipo": "Moto" }
+
+### 5. Crear moto (la placa se normaliza a MAYUSCULA sin espacios)
+POST {{host}}/Vehiculos
+Content-Type: application/json
+
+{
+  "placa": "xyz 12a",
+  "tipo": "Moto",
+  "propietario": "Juana",
+  "mensualidad": false
+}
+
+### 6. Entrada con celda automatica (celda 0) -> le asigna M-01
+POST {{host}}/Registros
+Content-Type: application/json
+
+{
+  "vehiculo": 2,
+  "celda": 0
+}
+
+### 7. Entrada de la misma moto otra vez -> ERROR ya esta adentro
+POST {{host}}/Registros
+Content-Type: application/json
+
+{
+  "vehiculo": 2,
+  "celda": 0
+}
+
+### 8. Vehiculos adentro
+GET {{host}}/Registros/Abiertos
+
+### 9. Celdas libres de carro
+GET {{host}}/Celdas/Disponibles/Carro

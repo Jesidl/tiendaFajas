@@ -1,0 +1,67 @@
+@host = http://localhost:5206
+
+### 1. Matricula de prueba: total esperado 300000 (estrato 2 = 50%)
+GET {{host}}/Matriculas/Parcial
+
+### 2. Crear estudiante estrato 4 (sin descuento)
+POST {{host}}/Estudiantes
+Content-Type: application/json
+
+{
+  "codigo": "2026001",
+  "nombre": "Sofia Vargas",
+  "estrato": 4
+}
+
+### 3. Matricularlo en el curso 1 (cupo 2: el Parcial ocupo 1, este ocupa el otro)
+POST {{host}}/Matriculas
+Content-Type: application/json
+
+{
+  "estudiante": 2,
+  "curso": 1,
+  "periodo": "2026-2"
+}
+
+### 4. Repetir la misma matricula -> ERROR duplicada
+POST {{host}}/Matriculas
+Content-Type: application/json
+
+{
+  "estudiante": 2,
+  "curso": 1,
+  "periodo": "2026-2"
+}
+
+### 5. Calificar (nota con punto decimal)
+PUT {{host}}/Matriculas/Calificar/1/4.5
+
+###
+PUT {{host}}/Matriculas/Calificar/2/2.8
+
+### 6. Reportes
+GET {{host}}/Matriculas/Resumen/2026-2
+
+###
+GET {{host}}/Matriculas/Promedio/1
+
+### 7. Bajar el cupo por debajo de los inscritos -> ERROR
+PUT {{host}}/Cursos
+Content-Type: application/json
+
+{
+  "id": 1,
+  "codigo": "X",
+  "nombre": "Bases de datos",
+  "creditos": 3,
+  "cupo": 0,
+  "valorCredito": 200000
+}
+
+### 8. Cancelar una matricula calificada -> ERROR
+DELETE {{host}}/Matriculas
+Content-Type: application/json
+
+{
+  "id": 1
+}

@@ -1,0 +1,73 @@
+@host = http://localhost:5203
+
+### 1. Cita de prueba (paciente + medico nuevos). Valor esperado: 40000
+GET {{host}}/Citas/Parcial
+
+### 2. Todas las citas (con paciente y medico)
+GET {{host}}/Citas
+
+### 3. Citas de un medico
+GET {{host}}/Citas/PorMedico/1
+
+### 4. Crear paciente
+POST {{host}}/Pacientes
+Content-Type: application/json
+
+{
+  "documento": "1010",
+  "nombre": "Carlos Ruiz",
+  "fechaNacimiento": "1990-03-15T00:00:00",
+  "subsidiado": false
+}
+
+### 5. Crear paciente con documento repetido -> ERROR
+POST {{host}}/Pacientes
+Content-Type: application/json
+
+{
+  "documento": "1010",
+  "nombre": "Otro",
+  "fechaNacimiento": "1990-03-15T00:00:00",
+  "subsidiado": false
+}
+
+### 6. Crear medico
+POST {{host}}/Medicos
+Content-Type: application/json
+
+{
+  "nombre": "Dra. Lopez",
+  "especialidad": "Pediatria",
+  "tarifa": 80000
+}
+
+### 7. Crear cita solo con Ids (cambia los ids segun tu base). Fecha FUTURA
+POST {{host}}/Citas
+Content-Type: application/json
+
+{
+  "paciente": 2,
+  "medico": 2,
+  "fecha": "2030-01-10T10:00:00"
+}
+
+### 8. Misma hora mismo medico -> ERROR choque de horario
+POST {{host}}/Citas
+Content-Type: application/json
+
+{
+  "paciente": 1,
+  "medico": 2,
+  "fecha": "2030-01-10T10:15:00"
+}
+
+### 9. Atender una cita
+PUT {{host}}/Citas/Atender/1?observacion=Paciente estable
+
+### 10. Cancelar (DELETE no borra, cambia estado)
+DELETE {{host}}/Citas
+Content-Type: application/json
+
+{
+  "id": 2
+}

@@ -1,0 +1,44 @@
+@servicios_notas_HostAddress = http://localhost:5029
+
+GET {{servicios_notas_HostAddress}}/Estudiantes
+Accept: application/json
+
+###
+
+POST {{servicios_notas_HostAddress}}/Estudiantes
+Content-Type: application/json
+
+{
+  "codigo": "456",
+  "nombres": "Maria",
+  "fecha": "2026-01-01T00:00:00",
+  "estado": true
+}
+
+###
+
+GET {{servicios_notas_HostAddress}}/Notas
+Accept: application/json
+
+###
+
+GET {{servicios_notas_HostAddress}}/Notas/Parcial
+Accept: application/json
+
+###
+
+POST {{servicios_notas_HostAddress}}/Notas
+Content-Type: application/json
+
+{
+  "materia": "Bases de datos",
+  "estudiante": 1,
+  "nota1": 5,
+  "nota2": 4.5,
+  "nota3": 4,
+  "nota4": 3.5,
+  "nota5": 5,
+  "notaFinal": 4.4
+}
+
+###

@@ -1,0 +1,67 @@
+@host = http://localhost:5204
+
+### 1. Prestamo de prueba (vencido hace 5 dias). Mira "disponibles": 2 en el libro
+GET {{host}}/Prestamos/Parcial
+
+### 2. Devolverlo -> diasRetraso 5, multa 5000 (cambia el id)
+PUT {{host}}/Prestamos/Devolver/1
+
+### 3. Libros (disponibles volvio a 3)
+GET {{host}}/Libros
+
+### 4. Pendientes / vencidos
+GET {{host}}/Prestamos/Pendientes
+
+###
+GET {{host}}/Prestamos/Vencidos
+
+### 5. Crear libro (disponibles lo calcula la libreria)
+POST {{host}}/Libros
+Content-Type: application/json
+
+{
+  "isbn": "978-1",
+  "titulo": "El principito",
+  "autor": "Saint-Exupery",
+  "ejemplares": 1
+}
+
+### 6. Crear lector
+POST {{host}}/Lectores
+Content-Type: application/json
+
+{
+  "documento": "5050",
+  "nombre": "Luis Mora",
+  "correo": "luis@correo.com"
+}
+
+### 7. Prestar con ids (cambia ids). Prestarlo 2 veces -> ERROR sin disponibles
+POST {{host}}/Prestamos
+Content-Type: application/json
+
+{
+  "libro": 2,
+  "lector": 2
+}
+
+### 8. Renovar: nueva fecha limite (max 30 dias desde el prestamo)
+PUT {{host}}/Prestamos
+Content-Type: application/json
+
+{
+  "id": 2,
+  "fechaLimite": "2026-11-01T00:00:00"
+}
+
+### 9. Bajar ejemplares por debajo de los prestados -> ERROR
+PUT {{host}}/Libros
+Content-Type: application/json
+
+{
+  "id": 2,
+  "isbn": "978-1",
+  "titulo": "El principito",
+  "autor": "Saint-Exupery",
+  "ejemplares": 0
+}
