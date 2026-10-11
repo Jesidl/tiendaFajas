@@ -1,6 +1,0 @@
-@servicios_notas_HostAddress = http://localhost:5029
-
-GET {{servicios_notas_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
