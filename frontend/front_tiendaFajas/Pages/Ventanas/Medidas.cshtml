@@ -1,0 +1,153 @@
+@page
+@model MedidasModel
+@{
+    ViewData["Title"] = "Medidas";
+}
+<form method="post"
+    enctype="multipart/form-data">
+
+    <div class="text-center">
+        <h1 class="display-4">Medidas</h1>
+
+        <input type="submit"
+            value="Buscar"
+            class="btn btn-secondary"
+            asp-page-handler="BtBuscar"/>
+        <input type="submit"
+            value="Nuevo"
+            class="btn btn-secondary"
+            asp-page-handler="BtNuevo"/>
+        <input type="submit"
+            value="Guardar"
+            class="btn btn-secondary"
+            asp-page-handler="BtGuardar"/>
+        <input id="flFiltro"
+            placeholder="Filtro"
+            asp-for="@Model.Filtro!.Filtro"/>
+
+        @if (ViewData.ContainsKey("Mensaje"))
+        {
+            @await Html.PartialAsync("../Emergentes/Mensajes.cshtml");
+        }
+
+        @if (Model.Formulario || Model.Borrar)
+        {
+            <input id="nmId"
+                type="hidden"
+                asp-for="@Model.Actual!.Id" />
+        }
+
+        @if (Model.Formulario)
+        {
+            <div>
+                <h3>Medidas</h3>
+
+                <label>
+                    Cliente
+                </label>
+                <select id="nmCliente"
+                    asp-for="@Model.Actual!.Cliente"
+                    asp-items="@(new SelectList(Model.Clientes, "Id", "Nombre"))">
+                </select>
+                <br />
+
+                <label>
+                    Cintura
+                </label>
+                <input id="nmCintura"
+                    asp-for="@Model.Actual!.Cintura" />
+                <br />
+
+                <label>
+                    Cadera
+                </label>
+                <input id="nmCadera"
+                    asp-for="@Model.Actual!.Cadera" />
+                <br />
+
+                <label>
+                    Busto
+                </label>
+                <input id="nmBusto"
+                    asp-for="@Model.Actual!.Busto" />
+                <br />
+
+                <label>
+                    Fecha
+                </label>
+                <input id="nmFecha"
+                    asp-for="@Model.Actual!.Fecha" />
+                <br />
+
+            </div>
+        }
+
+        @if (Model.Borrar)
+        {
+            <div class="popup">
+                <div class="pp_del_inner">
+                    <h3>Mensaje</h3>
+
+                    <h4>
+                        ¿Desea borrar el registro?
+                    </h4>
+                    <h6>
+                        @Model.Actual!._Cliente!.Nombre,
+                        @Model.Actual!.Cintura,
+                        @Model.Actual!.Cadera
+                    </h6>
+                    <input type="submit"
+                        value="Cancelar"
+                        class="btn btn-secondary"
+                        asp-page-handler="BtBuscar" />
+                    <input type="submit"
+                        value="Borrar"
+                        class="btn btn-secondary"
+                        asp-page-handler="BtBorrar" />
+                </div>
+            </div>
+        }
+
+        @if (!Model.Formulario)
+        {
+            <div class="containers_vn panel panel-default">
+                <table class="tb_data table table-striped table-bordered table-hover">
+                    <tr>
+                        <th>Cliente</th>
+                        <th>Cintura</th>
+                        <th>Cadera</th>
+                        <th>Busto</th>
+                        <th>Fecha</th>
+                        <th>Acción</th>
+                    </tr>
+                    @if (Model != null && Model.Lista != null)
+                    {
+                        foreach (var elemento in Model.Lista)
+                        {
+                            <tr>
+                                <td>@elemento._Cliente!.Nombre</td>
+                                <td>@elemento.Cintura</td>
+                                <td>@elemento.Cadera</td>
+                                <td>@elemento.Busto</td>
+                                <td>@elemento.Fecha</td>
+                                <td>
+                                    <input type="submit"
+                                        value="Editar"
+                                        class="btn btn-secondary"
+                                        asp-page-handler="BtEditar"
+                                        asp-route-data="@elemento.Id" />
+                                    <input type="submit"
+                                        value="Borrar"
+                                        class="btn btn-secondary"
+                                        asp-page-handler="BtPregBorrar"
+                                        asp-route-data="@elemento.Id" />
+                                </td>
+                            </tr>
+                        }
+                    }
+                </table>
+            </div>
+        }
+
+    </div>
+</form>
