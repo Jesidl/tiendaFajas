@@ -1,0 +1,17 @@
+[
+  {
+    "Name": "backend + frontend",
+    "Projects": [
+      {
+        "Path": "servicio_tiendaFajas\\servicio_tiendaFajas.csproj",
+        "Action": "Start",
+        "DebugTarget": "http"
+      },
+      {
+        "Path": "..\\frontend\\front_tiendaFajas\\front_tiendaFajas.csproj",
+        "Action": "Start",
+        "DebugTarget": "http"
+      }
+    ]
+  }
+]

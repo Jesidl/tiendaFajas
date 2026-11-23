@@ -1,5 +1,7 @@
 <Solution>
-  <Project Path="lib_aplicaciones/lib_aplicaciones.csproj" />
-  <Project Path="csl_presentacion/csl_presentacion.csproj" />
-  <Project Path="mst_presentacion/mst_presentacion.csproj" />
+  <Project Path="aplicacion_tiendaFajas/aplicacion_tiendaFajas.csproj" />
+  <Project Path="presentacion_tiendaFajas/presentacion_tiendaFajas.csproj" />
+  <Project Path="servicio_tiendaFajas/servicio_tiendaFajas.csproj" />
+  <Project Path="pruebas_tiendaFajas/pruebas_tiendaFajas.csproj" />
+  <Project Path="../frontend/front_tiendaFajas/front_tiendaFajas.csproj" />
 </Solution>

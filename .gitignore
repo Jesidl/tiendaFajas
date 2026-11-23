@@ -15,6 +15,15 @@
 *.sln.docstates
 *.userprefs
 
+# Excepcion: el perfil de arranque multiple no es configuracion personal.
+# Es la unica forma de levantar el servicio y el front a la vez, y sin el
+# quien clone el repositorio ve "Error Comunicacion" en el front.
+!*.slnLaunch.user
+
+# Carpetas de trabajo que Postman crea en el directorio desde el que se abre
+.postman/
+postman/
+
 # Rider
 .idea/
 
