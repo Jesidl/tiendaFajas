@@ -1,0 +1,74 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Inicio";
+}
+
+@if (!Model.EstaLogueado)
+{
+    <div class="text-center">
+        <h1 class="display-4">Tienda de Fajas</h1>
+
+        <form method="post">
+            <div class="containers_lg">
+                <h3>Ingreso</h3>
+
+                <label>
+                    Correo
+                </label>
+                <input id="nmCorreo"
+                       class="form-control"
+                       asp-for="@Model.Correo" />
+                <br />
+
+                <label>
+                    Contrase&ntilde;a
+                </label>
+                <input id="nmClave"
+                       type="password"
+                       class="form-control"
+                       asp-for="@Model.ClaveEscrita" />
+                <br />
+
+                <input type="submit"
+                       value="Limpiar"
+                       class="btn btn-secondary"
+                       asp-page-handler="BtLimpiar" />
+                <input type="submit"
+                       value="Entrar"
+                       class="btn btn-secondary"
+                       asp-page-handler="BtEntrar" />
+            </div>
+
+            @if (ViewData.ContainsKey("Mensaje"))
+            {
+                <div class="pp_ms_texto">
+                    <h5>@ViewData["Mensaje"]</h5>
+                </div>
+            }
+        </form>
+    </div>
+}
+else
+{
+    <div class="text-center">
+        <h1 class="display-4">Bienvenido @Model.Usuario</h1>
+
+        @if (!string.IsNullOrEmpty(Model.Rol))
+        {
+            <h5>Rol: @Model.Rol</h5>
+        }
+
+        <p>
+            Use el men&uacute; superior para administrar los cat&aacute;logos,
+            las personas, los productos, las ventas, las compras y la seguridad.
+        </p>
+
+        <form method="post">
+            <input type="submit"
+                   value="Cerrar sesi&oacute;n"
+                   class="btn btn-secondary"
+                   asp-page-handler="BtCerrar" />
+        </form>
+    </div>
+}
