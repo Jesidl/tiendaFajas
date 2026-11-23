@@ -1,0 +1,58 @@
+@page
+@model AuditoriasModel
+@{
+    ViewData["Title"] = "Auditorias";
+}
+@*
+    Esta ventana es de solo lectura a proposito. Una bitacora que se puede
+    editar o borrar desde la interfaz no sirve como evidencia. La API si
+    expone las cinco operaciones, como todas las demas entidades.
+*@
+<form method="post"
+    enctype="multipart/form-data">
+
+    <div class="text-center">
+        <h1 class="display-4">Auditorias</h1>
+
+        <input type="submit"
+            value="Buscar"
+            class="btn btn-secondary"
+            asp-page-handler="BtBuscar"/>
+        <input id="flEntidad"
+            placeholder="Entidad"
+            asp-for="@Model.Filtro!.Entidad"/>
+
+        @if (ViewData.ContainsKey("Mensaje"))
+        {
+            @await Html.PartialAsync("../Emergentes/Mensajes.cshtml");
+        }
+
+        <div class="containers_vn panel panel-default">
+            <table class="tb_data table table-striped table-bordered table-hover">
+                <tr>
+                    <th>Entidad</th>
+                    <th>Llave</th>
+                    <th>Operacion</th>
+                    <th>Usuario</th>
+                    <th>Fecha</th>
+                    <th>Datos</th>
+                </tr>
+                @if (Model != null && Model.Lista != null)
+                {
+                    foreach (var elemento in Model.Lista)
+                    {
+                        <tr>
+                            <td>@elemento.Entidad</td>
+                            <td>@elemento.Llave</td>
+                            <td>@elemento.Operacion</td>
+                            <td>@elemento.Usuario</td>
+                            <td>@elemento.Fecha</td>
+                            <td class="td_datos">@elemento.Datos</td>
+                        </tr>
+                    }
+                }
+            </table>
+        </div>
+
+    </div>
+</form>

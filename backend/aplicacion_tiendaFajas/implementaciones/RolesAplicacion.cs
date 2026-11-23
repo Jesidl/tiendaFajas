@@ -1,0 +1,71 @@
+using aplicacion_tiendaFajas.entidades;
+using Microsoft.EntityFrameworkCore;
+
+namespace aplicacion_tiendaFajas.interfaces
+{
+    public class RolesAplicacion : IRolesAplicacion
+    {
+        private IConexion IConexion;
+
+        public RolesAplicacion(IConexion IConexion)
+        {
+            this.IConexion = IConexion;
+        }
+
+        public Roles Actualizar(Roles entidad)
+        {
+            if (entidad.Id == 0)
+                throw new Exception("No se ha guardo");
+
+            if (Validar(entidad))
+                throw new Exception("Falta informacion");
+
+            var entry = this.IConexion!.Entry<Roles>(entidad);
+            entry.State = EntityState.Modified;
+            this.IConexion!.SaveChanges();
+            return entidad;
+        }
+
+        public Roles Borrar(Roles entidad)
+        {
+            if (entidad.Id == 0)
+                throw new Exception("No se ha guardo");
+
+            this.IConexion.Roles!.Remove(entidad!);
+            this.IConexion.SaveChanges();
+            return entidad;
+        }
+
+        public List<Roles> Buscar(Roles entidad)
+        {
+            return this.IConexion.Roles!
+                .Where(x => x.Nombre!.Contains(entidad.Nombre!))
+                .ToList();
+        }
+
+        public List<Roles> Consultar()
+        {
+            return this.IConexion.Roles!
+                .Take(5).ToList();
+        }
+
+        public Roles Insertar(Roles entidad)
+        {
+            if (entidad.Id != 0)
+                throw new Exception("Ya se guardo");
+
+            if (Validar(entidad))
+                throw new Exception("Falta informacion");
+
+            this.IConexion.Roles!.Add(entidad!);
+            this.IConexion.SaveChanges();
+            return entidad;
+        }
+
+        private bool Validar(Roles entidad)
+        {
+            return string.IsNullOrEmpty(entidad.Nombre) ||
+                string.IsNullOrEmpty(entidad.Descripcion);
+        }
+    }
+}
