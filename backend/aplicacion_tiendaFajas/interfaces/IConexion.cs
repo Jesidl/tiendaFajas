@@ -30,6 +30,7 @@ namespace aplicacion_tiendaFajas.interfaces
         DbSet<Usuarios>? Usuarios { get; set; }
         DbSet<Permisos>? Permisos { get; set; }
         DbSet<Auditorias>? Auditorias { get; set; }
+        DbSet<Imagenes>? Imagenes { get; set; }
 
         EntityEntry<T> Entry<T>(T entity) where T : class;
         int SaveChanges();
