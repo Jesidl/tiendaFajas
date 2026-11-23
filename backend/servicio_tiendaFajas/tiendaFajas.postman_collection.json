@@ -1178,6 +1178,219 @@
       ]
     },
     {
+      "name": "Imagenes",
+      "item": [
+        {
+          "name": "Insertar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}",
+                "description": "El servicio lo lee para la auditoria. Sin esta cabecera el rastro queda a nombre de \"sistema\"."
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"Producto\": 1,\r\n  \"Nombre\": \"faja.png\",\r\n  \"Tipo\": \"image/png\",\r\n  \"Tamano\": 447,\r\n  \"Fecha\": \"2026-11-22T10:00:00\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{servicio}}/Imagenes/Insertar",
+            "description": "Exige Id = 0 y que los campos obligatorios vengan llenos. Devuelve la entidad con el Id que asigno la base."
+          }
+        },
+        {
+          "name": "Actualizar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}",
+                "description": "El servicio lo lee para la auditoria. Sin esta cabecera el rastro queda a nombre de \"sistema\"."
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"Id\": 1,\r\n  \"Producto\": 1,\r\n  \"Nombre\": \"faja.png\",\r\n  \"Tipo\": \"image/png\",\r\n  \"Tamano\": 447,\r\n  \"Fecha\": \"2026-11-22T10:00:00\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{servicio}}/Imagenes/Actualizar",
+            "description": "Exige Id != 0. Cambie el Id por uno que exista."
+          }
+        },
+        {
+          "name": "Consultar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}",
+                "description": "El servicio lo lee para la auditoria. Sin esta cabecera el rastro queda a nombre de \"sistema\"."
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{servicio}}/Imagenes/Consultar",
+            "description": "Devuelve las primeras 5 filas con las navegaciones de FK resueltas. El cuerpo se manda vacio porque el metodo no lo usa."
+          }
+        },
+        {
+          "name": "Buscar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}",
+                "description": "El servicio lo lee para la auditoria. Sin esta cabecera el rastro queda a nombre de \"sistema\"."
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"Nombre\": \".png\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{servicio}}/Imagenes/Buscar",
+            "description": "Filtra por Nombre con Contains. El valor de ejemplo coincide con las semillas de Script.sql."
+          }
+        },
+        {
+          "name": "Borrar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}",
+                "description": "El servicio lo lee para la auditoria. Sin esta cabecera el rastro queda a nombre de \"sistema\"."
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"Id\": 1\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{servicio}}/Imagenes/Borrar",
+            "description": "Exige Id != 0. Falla si otra tabla referencia la fila."
+          }
+        },
+        {
+          "name": "DeProducto",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}",
+                "description": "El servicio lo lee para la auditoria. Sin esta cabecera el rastro queda a nombre de \"sistema\"."
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"Producto\": 1\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{servicio}}/Imagenes/DeProducto",
+            "description": "Fichas de las imagenes de un producto, sin el binario."
+          }
+        },
+        {
+          "name": "Subir (multipart)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "archivo",
+                  "type": "file",
+                  "src": [],
+                  "description": "Escoja una imagen PNG, JPEG, WEBP o GIF de hasta 4 MB."
+                },
+                {
+                  "key": "producto",
+                  "type": "text",
+                  "value": "1",
+                  "description": "Id del producto al que pertenece."
+                }
+              ]
+            },
+            "url": "{{servicio}}/Imagenes/Subir",
+            "description": "Sube el archivo. No lleva Content-Type a mano: Postman pone el de multipart\ncon su frontera.\n\nEl tipo de la imagen NO se toma del Content-Type que manda el cliente: el\nservicio lo deduce de los primeros bytes del archivo. Por eso da igual lo que\ndeclare Postman, y por eso un HTML renombrado a .png se rechaza."
+          }
+        },
+        {
+          "name": "Ver (GET)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{servicio}}/Imagenes/Ver/1",
+            "description": "Devuelve el archivo con su Content-Type real. Es el unico GET del servicio:\nlo consume el atributo src de una etiqueta img del navegador, que no sabe\nhacer POST. Cambie el 1 por el Id de una imagen que exista."
+          }
+        }
+      ]
+    },
+    {
       "name": "Inventarios",
       "item": [
         {

@@ -39,6 +39,7 @@ namespace aplicacion_tiendaFajas.implementaciones
         public DbSet<Usuarios>? Usuarios { get; set; }
         public DbSet<Permisos>? Permisos { get; set; }
         public DbSet<Auditorias>? Auditorias { get; set; }
+        public DbSet<Imagenes>? Imagenes { get; set; }
 
         // ------------------------------------------------------------------
         // Auditoria transversal.
@@ -153,6 +154,12 @@ namespace aplicacion_tiendaFajas.implementaciones
 
                 // jamas registrar el hash de la contrasena en la bitacora
                 if (nombre == "Clave")
+                    continue;
+
+                // los binarios no se registran: un VARBINARY(MAX) no cabe en
+                // la columna de datos y no dice nada legible. El tamaño del
+                // archivo ya queda en su propia columna.
+                if (propiedad.Metadata.ClrType == typeof(byte[]))
                     continue;
 
                 // el Id ya viaja en Llave, y aqui todavia no es el definitivo:

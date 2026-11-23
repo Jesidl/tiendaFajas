@@ -466,6 +466,65 @@ X-Usuario: {{usuario}}
 
 ###
 
+### Imagenes
+
+POST {{servicio}}/Imagenes/Insertar
+Content-Type: application/json
+X-Usuario: {{usuario}}
+
+{
+  "Producto": 1,
+  "Nombre": "faja.png",
+  "Tipo": "image/png",
+  "Tamano": 447,
+  "Fecha": "2026-11-22T10:00:00"
+}
+
+###
+
+POST {{servicio}}/Imagenes/Actualizar
+Content-Type: application/json
+X-Usuario: {{usuario}}
+
+{
+  "Id": 1,
+  "Producto": 1,
+  "Nombre": "faja.png",
+  "Tipo": "image/png",
+  "Tamano": 447,
+  "Fecha": "2026-11-22T10:00:00"
+}
+
+###
+
+POST {{servicio}}/Imagenes/Consultar
+Content-Type: application/json
+X-Usuario: {{usuario}}
+
+{}
+
+###
+
+POST {{servicio}}/Imagenes/Buscar
+Content-Type: application/json
+X-Usuario: {{usuario}}
+
+{
+  "Nombre": ".png"
+}
+
+###
+
+POST {{servicio}}/Imagenes/Borrar
+Content-Type: application/json
+X-Usuario: {{usuario}}
+
+{
+  "Id": 1
+}
+
+###
+
 ### Inventarios
 
 POST {{servicio}}/Inventarios/Insertar

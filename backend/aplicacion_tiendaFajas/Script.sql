@@ -268,6 +268,23 @@ CREATE TABLE [Auditorias] (
 	[Datos] NVARCHAR(MAX) NOT NULL,
 );
 
+-- ------------------------------------------------------------------
+-- Imagenes de los productos.
+--
+-- Tabla aparte y no una columna en Productos: un producto puede tener
+-- varias fotos, y un VARBINARY(MAX) dentro de Productos se leeria en
+-- cada consulta de productos aunque nadie pida la imagen.
+-- ------------------------------------------------------------------
+CREATE TABLE [Imagenes] (
+	[Id] INT NOT NULL PRIMARY KEY IDENTITY(1, 1),
+	[Producto] INT NOT NULL REFERENCES [Productos]([Id]),
+	[Nombre] NVARCHAR(200) NOT NULL,
+	[Tipo] NVARCHAR(100) NOT NULL,
+	[Tamano] BIGINT NOT NULL,
+	[Fecha] SMALLDATETIME NOT NULL,
+	[Contenido] VARBINARY(MAX) NOT NULL,
+);
+
 -- Semillas. La columna Clave guarda "sal.hash" en hexadecimal
 -- (PBKDF2-HMAC-SHA256, 210000 iteraciones), nunca la contrasena.
 -- Los hashes de abajo corresponden a Admin.123 y Vende.123; se generan
