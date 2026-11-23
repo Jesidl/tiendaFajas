@@ -30,6 +30,7 @@ builder.Services.AddScoped<IRolesAplicacion, RolesAplicacion>();
 builder.Services.AddScoped<IUsuariosAplicacion, UsuariosAplicacion>();
 builder.Services.AddScoped<IPermisosAplicacion, PermisosAplicacion>();
 builder.Services.AddScoped<IAuditoriasAplicacion, AuditoriasAplicacion>();
+builder.Services.AddScoped<IImagenesAplicacion, ImagenesAplicacion>();
 
 var app = builder.Build();
 
