@@ -24,6 +24,12 @@
 .postman/
 postman/
 
+# Al abrir la coleccion desde el disco, Postman la convierte a su formato de
+# carpeta con un YAML por peticion y se lleva el .json. Esa carpeta es su copia
+# de trabajo local; en el repositorio se versiona el .json, que es el formato
+# portable y el que se puede importar en cualquier instalacion.
+/backend/servicio_tiendaFajas/tiendaFajas - servicio REST/
+
 # Rider
 .idea/
 

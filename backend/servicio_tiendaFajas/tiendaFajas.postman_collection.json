@@ -1,0 +1,3501 @@
+{
+  "info": {
+    "name": "tiendaFajas - servicio REST",
+    "description": "Servicio REST de tiendaFajas: 24 entidades x 5 operaciones = 120 endpoints.\n\nDos cosas que hay que saber antes de usar esta coleccion:\n\n1. TODOS los endpoints son POST con cuerpo JSON, incluidos Consultar y\n   Buscar. No se usan GET, PUT ni DELETE. Desde la barra del navegador\n   responden 405, porque el navegador manda GET.\n\n2. La cabecera X-Usuario es la que el servicio escribe en la tabla\n   Auditorias. Si no se manda, el rastro queda a nombre de \"sistema\".\n\nVariables de la coleccion:\n  servicio = http://localhost:5250   (el puerto de launchSettings.json del\n                                      servicio; el mismo que esta escrito a\n                                      mano en Comunicaciones.cs)\n  usuario  = admin@tiendafajas.com\n\nAntes de probar, levantar el servicio:\n  dotnet run --project backend/servicio_tiendaFajas\n\nLos valores de Buscar coinciden con las semillas de Script.sql, asi que\ndevuelven filas. Los de Insertar apuntan sus FK a la fila semilla Id = 1.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "servicio",
+      "value": "http://localhost:5250",
+      "type": "string"
+    },
+    {
+      "key": "usuario",
+      "value": "admin@tiendafajas.com",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Auditorias",
+      "item": [
+        {
+          "name": "Insertar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}",
+                "description": "El servicio lo lee para la auditoria. Sin esta cabecera el rastro queda a nombre de \"sistema\"."
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"Entidad\": \"Cargos\",\r\n  \"Llave\": 1,\r\n  \"Operacion\": \"Insertar\",\r\n  \"Usuario\": \"admin@tiendafajas.com\",\r\n  \"Fecha\": \"2026-11-22T10:00:00\",\r\n  \"Datos\": \"Nombre=valor; Descripcion=valor\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{servicio}}/Auditorias/Insertar",
+            "description": "Exige Id = 0 y que los campos obligatorios vengan llenos. Devuelve la entidad con el Id que asigno la base."
+          }
+        },
+        {
+          "name": "Actualizar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}",
+                "description": "El servicio lo lee para la auditoria. Sin esta cabecera el rastro queda a nombre de \"sistema\"."
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"Id\": 1,\r\n  \"Entidad\": \"Cargos\",\r\n  \"Llave\": 1,\r\n  \"Operacion\": \"Insertar\",\r\n  \"Usuario\": \"admin@tiendafajas.com\",\r\n  \"Fecha\": \"2026-11-22T10:00:00\",\r\n  \"Datos\": \"Nombre=valor; Descripcion=valor\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{servicio}}/Auditorias/Actualizar",
+            "description": "Exige Id != 0. Cambie el Id por uno que exista."
+          }
+        },
+        {
+          "name": "Consultar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}",
+                "description": "El servicio lo lee para la auditoria. Sin esta cabecera el rastro queda a nombre de \"sistema\"."
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{servicio}}/Auditorias/Consultar",
+            "description": "Devuelve las primeras 5 filas con las navegaciones de FK resueltas. El cuerpo se manda vacio porque el metodo no lo usa."
+          }
+        },
+        {
+          "name": "Buscar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}",
+                "description": "El servicio lo lee para la auditoria. Sin esta cabecera el rastro queda a nombre de \"sistema\"."
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"Entidad\": \"Cargos\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{servicio}}/Auditorias/Buscar",
+            "description": "Filtra por Entidad con Contains. El valor de ejemplo coincide con las semillas de Script.sql."
+          }
+        },
+        {
+          "name": "Borrar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}",
+                "description": "El servicio lo lee para la auditoria. Sin esta cabecera el rastro queda a nombre de \"sistema\"."
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"Id\": 1\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{servicio}}/Auditorias/Borrar",
+            "description": "Exige Id != 0. Falla si otra tabla referencia la fila."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Cargos",
+      "item": [
+        {
+          "name": "Insertar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}",
+                "description": "El servicio lo lee para la auditoria. Sin esta cabecera el rastro queda a nombre de \"sistema\"."
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"Nombre\": \"Bodeguero\",\r\n  \"Descripcion\": \"Creado desde Postman\",\r\n  \"Salario\": 1500000.0\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{servicio}}/Cargos/Insertar",
+            "description": "Exige Id = 0 y que los campos obligatorios vengan llenos. Devuelve la entidad con el Id que asigno la base."
+          }
+        },
+        {
+          "name": "Actualizar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}",
+                "description": "El servicio lo lee para la auditoria. Sin esta cabecera el rastro queda a nombre de \"sistema\"."
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"Id\": 1,\r\n  \"Nombre\": \"Bodeguero\",\r\n  \"Descripcion\": \"Creado desde Postman\",\r\n  \"Salario\": 1500000.0\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{servicio}}/Cargos/Actualizar",
+            "description": "Exige Id != 0. Cambie el Id por uno que exista."
+          }
+        },
+        {
+          "name": "Consultar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}",
+                "description": "El servicio lo lee para la auditoria. Sin esta cabecera el rastro queda a nombre de \"sistema\"."
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{servicio}}/Cargos/Consultar",
+            "description": "Devuelve las primeras 5 filas con las navegaciones de FK resueltas. El cuerpo se manda vacio porque el metodo no lo usa."
+          }
+        },
+        {
+          "name": "Buscar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}",
+                "description": "El servicio lo lee para la auditoria. Sin esta cabecera el rastro queda a nombre de \"sistema\"."
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"Nombre\": \"Asesora\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{servicio}}/Cargos/Buscar",
+            "description": "Filtra por Nombre con Contains. El valor de ejemplo coincide con las semillas de Script.sql."
+          }
+        },
+        {
+          "name": "Borrar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}",
+                "description": "El servicio lo lee para la auditoria. Sin esta cabecera el rastro queda a nombre de \"sistema\"."
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"Id\": 1\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{servicio}}/Cargos/Borrar",
+            "description": "Exige Id != 0. Falla si otra tabla referencia la fila."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Categorias",
+      "item": [
+        {
+          "name": "Insertar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}",
+                "description": "El servicio lo lee para la auditoria. Sin esta cabecera el rastro queda a nombre de \"sistema\"."
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"Nombre\": \"Deportivas\",\r\n  \"Descripcion\": \"Creado desde Postman\",\r\n  \"Estado\": true\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{servicio}}/Categorias/Insertar",
+            "description": "Exige Id = 0 y que los campos obligatorios vengan llenos. Devuelve la entidad con el Id que asigno la base."
+          }
+        },
+        {
+          "name": "Actualizar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}",
+                "description": "El servicio lo lee para la auditoria. Sin esta cabecera el rastro queda a nombre de \"sistema\"."
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"Id\": 1,\r\n  \"Nombre\": \"Deportivas\",\r\n  \"Descripcion\": \"Creado desde Postman\",\r\n  \"Estado\": true\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{servicio}}/Categorias/Actualizar",
+            "description": "Exige Id != 0. Cambie el Id por uno que exista."
+          }
+        },
+        {
+          "name": "Consultar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}",
+                "description": "El servicio lo lee para la auditoria. Sin esta cabecera el rastro queda a nombre de \"sistema\"."
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{servicio}}/Categorias/Consultar",
+            "description": "Devuelve las primeras 5 filas con las navegaciones de FK resueltas. El cuerpo se manda vacio porque el metodo no lo usa."
+          }
+        },
+        {
+          "name": "Buscar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}",
+                "description": "El servicio lo lee para la auditoria. Sin esta cabecera el rastro queda a nombre de \"sistema\"."
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"Nombre\": \"Post\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{servicio}}/Categorias/Buscar",
+            "description": "Filtra por Nombre con Contains. El valor de ejemplo coincide con las semillas de Script.sql."
+          }
+        },
+        {
+          "name": "Borrar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}",
+                "description": "El servicio lo lee para la auditoria. Sin esta cabecera el rastro queda a nombre de \"sistema\"."
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"Id\": 1\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{servicio}}/Categorias/Borrar",
+            "description": "Exige Id != 0. Falla si otra tabla referencia la fila."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Clientes",
+      "item": [
+        {
+          "name": "Insertar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}",
+                "description": "El servicio lo lee para la auditoria. Sin esta cabecera el rastro queda a nombre de \"sistema\"."
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"Cedula\": \"9001\",\r\n  \"Nombre\": \"Cliente Postman\",\r\n  \"Telefono\": \"3001234567\",\r\n  \"Correo\": \"nuevo@correo.com\",\r\n  \"Direccion\": \"Calle 1 # 2-3\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{servicio}}/Clientes/Insertar",
+            "description": "Exige Id = 0 y que los campos obligatorios vengan llenos. Devuelve la entidad con el Id que asigno la base."
+          }
+        },
+        {
+          "name": "Actualizar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}",
+                "description": "El servicio lo lee para la auditoria. Sin esta cabecera el rastro queda a nombre de \"sistema\"."
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"Id\": 1,\r\n  \"Cedula\": \"9001\",\r\n  \"Nombre\": \"Cliente Postman\",\r\n  \"Telefono\": \"3001234567\",\r\n  \"Correo\": \"nuevo@correo.com\",\r\n  \"Direccion\": \"Calle 1 # 2-3\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{servicio}}/Clientes/Actualizar",
+            "description": "Exige Id != 0. Cambie el Id por uno que exista."
+          }
+        },
+        {
+          "name": "Consultar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}",
+                "description": "El servicio lo lee para la auditoria. Sin esta cabecera el rastro queda a nombre de \"sistema\"."
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{servicio}}/Clientes/Consultar",
+            "description": "Devuelve las primeras 5 filas con las navegaciones de FK resueltas. El cuerpo se manda vacio porque el metodo no lo usa."
+          }
+        },
+        {
+          "name": "Buscar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}",
+                "description": "El servicio lo lee para la auditoria. Sin esta cabecera el rastro queda a nombre de \"sistema\"."
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"Nombre\": \"Maria\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{servicio}}/Clientes/Buscar",
+            "description": "Filtra por Nombre con Contains. El valor de ejemplo coincide con las semillas de Script.sql."
+          }
+        },
+        {
+          "name": "Borrar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}",
+                "description": "El servicio lo lee para la auditoria. Sin esta cabecera el rastro queda a nombre de \"sistema\"."
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"Id\": 1\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{servicio}}/Clientes/Borrar",
+            "description": "Exige Id != 0. Falla si otra tabla referencia la fila."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Colores",
+      "item": [
+        {
+          "name": "Insertar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}",
+                "description": "El servicio lo lee para la auditoria. Sin esta cabecera el rastro queda a nombre de \"sistema\"."
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"Nombre\": \"Negro\",\r\n  \"Codigo_Hex\": \"#000000\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{servicio}}/Colores/Insertar",
+            "description": "Exige Id = 0 y que los campos obligatorios vengan llenos. Devuelve la entidad con el Id que asigno la base."
+          }
+        },
+        {
+          "name": "Actualizar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}",
+                "description": "El servicio lo lee para la auditoria. Sin esta cabecera el rastro queda a nombre de \"sistema\"."
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"Id\": 1,\r\n  \"Nombre\": \"Negro\",\r\n  \"Codigo_Hex\": \"#000000\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{servicio}}/Colores/Actualizar",
+            "description": "Exige Id != 0. Cambie el Id por uno que exista."
+          }
+        },
+        {
+          "name": "Consultar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}",
+                "description": "El servicio lo lee para la auditoria. Sin esta cabecera el rastro queda a nombre de \"sistema\"."
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{servicio}}/Colores/Consultar",
+            "description": "Devuelve las primeras 5 filas con las navegaciones de FK resueltas. El cuerpo se manda vacio porque el metodo no lo usa."
+          }
+        },
+        {
+          "name": "Buscar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}",
+                "description": "El servicio lo lee para la auditoria. Sin esta cabecera el rastro queda a nombre de \"sistema\"."
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"Nombre\": \"Bei\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{servicio}}/Colores/Buscar",
+            "description": "Filtra por Nombre con Contains. El valor de ejemplo coincide con las semillas de Script.sql."
+          }
+        },
+        {
+          "name": "Borrar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}",
+                "description": "El servicio lo lee para la auditoria. Sin esta cabecera el rastro queda a nombre de \"sistema\"."
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"Id\": 1\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{servicio}}/Colores/Borrar",
+            "description": "Exige Id != 0. Falla si otra tabla referencia la fila."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Detalles_Pedidos",
+      "item": [
+        {
+          "name": "Insertar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}",
+                "description": "El servicio lo lee para la auditoria. Sin esta cabecera el rastro queda a nombre de \"sistema\"."
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"Pedido\": 1,\r\n  \"Variante\": 1,\r\n  \"Cantidad\": 1,\r\n  \"Precio_Compra\": 90000.0,\r\n  \"Subtotal\": 150000.0\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{servicio}}/Detalles_Pedidos/Insertar",
+            "description": "Exige Id = 0 y que los campos obligatorios vengan llenos. Devuelve la entidad con el Id que asigno la base."
+          }
+        },
+        {
+          "name": "Actualizar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}",
+                "description": "El servicio lo lee para la auditoria. Sin esta cabecera el rastro queda a nombre de \"sistema\"."
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"Id\": 1,\r\n  \"Pedido\": 1,\r\n  \"Variante\": 1,\r\n  \"Cantidad\": 1,\r\n  \"Precio_Compra\": 90000.0,\r\n  \"Subtotal\": 150000.0\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{servicio}}/Detalles_Pedidos/Actualizar",
+            "description": "Exige Id != 0. Cambie el Id por uno que exista."
+          }
+        },
+        {
+          "name": "Consultar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}",
+                "description": "El servicio lo lee para la auditoria. Sin esta cabecera el rastro queda a nombre de \"sistema\"."
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{servicio}}/Detalles_Pedidos/Consultar",
+            "description": "Devuelve las primeras 5 filas con las navegaciones de FK resueltas. El cuerpo se manda vacio porque el metodo no lo usa."
+          }
+        },
+        {
+          "name": "Buscar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}",
+                "description": "El servicio lo lee para la auditoria. Sin esta cabecera el rastro queda a nombre de \"sistema\"."
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"Filtro\": \"P-\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{servicio}}/Detalles_Pedidos/Buscar",
+            "description": "Filtra por Filtro con Contains. El valor de ejemplo coincide con las semillas de Script.sql."
+          }
+        },
+        {
+          "name": "Borrar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}",
+                "description": "El servicio lo lee para la auditoria. Sin esta cabecera el rastro queda a nombre de \"sistema\"."
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"Id\": 1\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{servicio}}/Detalles_Pedidos/Borrar",
+            "description": "Exige Id != 0. Falla si otra tabla referencia la fila."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Detalles_Ventas",
+      "item": [
+        {
+          "name": "Insertar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}",
+                "description": "El servicio lo lee para la auditoria. Sin esta cabecera el rastro queda a nombre de \"sistema\"."
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"Venta\": 1,\r\n  \"Variante\": 1,\r\n  \"Cantidad\": 1,\r\n  \"Precio_Unitario\": 150000.0,\r\n  \"Subtotal\": 150000.0\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{servicio}}/Detalles_Ventas/Insertar",
+            "description": "Exige Id = 0 y que los campos obligatorios vengan llenos. Devuelve la entidad con el Id que asigno la base."
+          }
+        },
+        {
+          "name": "Actualizar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}",
+                "description": "El servicio lo lee para la auditoria. Sin esta cabecera el rastro queda a nombre de \"sistema\"."
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"Id\": 1,\r\n  \"Venta\": 1,\r\n  \"Variante\": 1,\r\n  \"Cantidad\": 1,\r\n  \"Precio_Unitario\": 150000.0,\r\n  \"Subtotal\": 150000.0\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{servicio}}/Detalles_Ventas/Actualizar",
+            "description": "Exige Id != 0. Cambie el Id por uno que exista."
+          }
+        },
+        {
+          "name": "Consultar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}",
+                "description": "El servicio lo lee para la auditoria. Sin esta cabecera el rastro queda a nombre de \"sistema\"."
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{servicio}}/Detalles_Ventas/Consultar",
+            "description": "Devuelve las primeras 5 filas con las navegaciones de FK resueltas. El cuerpo se manda vacio porque el metodo no lo usa."
+          }
+        },
+        {
+          "name": "Buscar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}",
+                "description": "El servicio lo lee para la auditoria. Sin esta cabecera el rastro queda a nombre de \"sistema\"."
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"Filtro\": \"V-\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{servicio}}/Detalles_Ventas/Buscar",
+            "description": "Filtra por Filtro con Contains. El valor de ejemplo coincide con las semillas de Script.sql."
+          }
+        },
+        {
+          "name": "Borrar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}",
+                "description": "El servicio lo lee para la auditoria. Sin esta cabecera el rastro queda a nombre de \"sistema\"."
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"Id\": 1\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{servicio}}/Detalles_Ventas/Borrar",
+            "description": "Exige Id != 0. Falla si otra tabla referencia la fila."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Empleados",
+      "item": [
+        {
+          "name": "Insertar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}",
+                "description": "El servicio lo lee para la auditoria. Sin esta cabecera el rastro queda a nombre de \"sistema\"."
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"Cedula\": \"9001\",\r\n  \"Nombre\": \"Empleado Postman\",\r\n  \"Telefono\": \"3001234567\",\r\n  \"Sucursal\": 1,\r\n  \"Cargo\": 1\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{servicio}}/Empleados/Insertar",
+            "description": "Exige Id = 0 y que los campos obligatorios vengan llenos. Devuelve la entidad con el Id que asigno la base."
+          }
+        },
+        {
+          "name": "Actualizar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}",
+                "description": "El servicio lo lee para la auditoria. Sin esta cabecera el rastro queda a nombre de \"sistema\"."
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"Id\": 1,\r\n  \"Cedula\": \"9001\",\r\n  \"Nombre\": \"Empleado Postman\",\r\n  \"Telefono\": \"3001234567\",\r\n  \"Sucursal\": 1,\r\n  \"Cargo\": 1\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{servicio}}/Empleados/Actualizar",
+            "description": "Exige Id != 0. Cambie el Id por uno que exista."
+          }
+        },
+        {
+          "name": "Consultar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}",
+                "description": "El servicio lo lee para la auditoria. Sin esta cabecera el rastro queda a nombre de \"sistema\"."
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{servicio}}/Empleados/Consultar",
+            "description": "Devuelve las primeras 5 filas con las navegaciones de FK resueltas. El cuerpo se manda vacio porque el metodo no lo usa."
+          }
+        },
+        {
+          "name": "Buscar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}",
+                "description": "El servicio lo lee para la auditoria. Sin esta cabecera el rastro queda a nombre de \"sistema\"."
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"Nombre\": \"Laura\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{servicio}}/Empleados/Buscar",
+            "description": "Filtra por Nombre con Contains. El valor de ejemplo coincide con las semillas de Script.sql."
+          }
+        },
+        {
+          "name": "Borrar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}",
+                "description": "El servicio lo lee para la auditoria. Sin esta cabecera el rastro queda a nombre de \"sistema\"."
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"Id\": 1\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{servicio}}/Empleados/Borrar",
+            "description": "Exige Id != 0. Falla si otra tabla referencia la fila."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Inventarios",
+      "item": [
+        {
+          "name": "Insertar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}",
+                "description": "El servicio lo lee para la auditoria. Sin esta cabecera el rastro queda a nombre de \"sistema\"."
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"Variante\": 1,\r\n  \"Sucursal\": 1,\r\n  \"Cantidad\": 1,\r\n  \"Stock_Minimo\": 5,\r\n  \"Fecha_Actualizacion\": \"2026-11-22T10:00:00\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{servicio}}/Inventarios/Insertar",
+            "description": "Exige Id = 0 y que los campos obligatorios vengan llenos. Devuelve la entidad con el Id que asigno la base."
+          }
+        },
+        {
+          "name": "Actualizar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}",
+                "description": "El servicio lo lee para la auditoria. Sin esta cabecera el rastro queda a nombre de \"sistema\"."
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"Id\": 1,\r\n  \"Variante\": 1,\r\n  \"Sucursal\": 1,\r\n  \"Cantidad\": 1,\r\n  \"Stock_Minimo\": 5,\r\n  \"Fecha_Actualizacion\": \"2026-11-22T10:00:00\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{servicio}}/Inventarios/Actualizar",
+            "description": "Exige Id != 0. Cambie el Id por uno que exista."
+          }
+        },
+        {
+          "name": "Consultar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}",
+                "description": "El servicio lo lee para la auditoria. Sin esta cabecera el rastro queda a nombre de \"sistema\"."
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{servicio}}/Inventarios/Consultar",
+            "description": "Devuelve las primeras 5 filas con las navegaciones de FK resueltas. El cuerpo se manda vacio porque el metodo no lo usa."
+          }
+        },
+        {
+          "name": "Buscar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}",
+                "description": "El servicio lo lee para la auditoria. Sin esta cabecera el rastro queda a nombre de \"sistema\"."
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"Filtro\": \"FAJ-001\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{servicio}}/Inventarios/Buscar",
+            "description": "Filtra por Filtro con Contains. El valor de ejemplo coincide con las semillas de Script.sql."
+          }
+        },
+        {
+          "name": "Borrar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}",
+                "description": "El servicio lo lee para la auditoria. Sin esta cabecera el rastro queda a nombre de \"sistema\"."
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"Id\": 1\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{servicio}}/Inventarios/Borrar",
+            "description": "Exige Id != 0. Falla si otra tabla referencia la fila."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Marcas",
+      "item": [
+        {
+          "name": "Insertar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}",
+                "description": "El servicio lo lee para la auditoria. Sin esta cabecera el rastro queda a nombre de \"sistema\"."
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"Nombre\": \"Marca Postman\",\r\n  \"Pais\": \"Colombia\",\r\n  \"Estado\": true\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{servicio}}/Marcas/Insertar",
+            "description": "Exige Id = 0 y que los campos obligatorios vengan llenos. Devuelve la entidad con el Id que asigno la base."
+          }
+        },
+        {
+          "name": "Actualizar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}",
+                "description": "El servicio lo lee para la auditoria. Sin esta cabecera el rastro queda a nombre de \"sistema\"."
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"Id\": 1,\r\n  \"Nombre\": \"Marca Postman\",\r\n  \"Pais\": \"Colombia\",\r\n  \"Estado\": true\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{servicio}}/Marcas/Actualizar",
+            "description": "Exige Id != 0. Cambie el Id por uno que exista."
+          }
+        },
+        {
+          "name": "Consultar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}",
+                "description": "El servicio lo lee para la auditoria. Sin esta cabecera el rastro queda a nombre de \"sistema\"."
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{servicio}}/Marcas/Consultar",
+            "description": "Devuelve las primeras 5 filas con las navegaciones de FK resueltas. El cuerpo se manda vacio porque el metodo no lo usa."
+          }
+        },
+        {
+          "name": "Buscar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}",
+                "description": "El servicio lo lee para la auditoria. Sin esta cabecera el rastro queda a nombre de \"sistema\"."
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"Nombre\": \"Salome\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{servicio}}/Marcas/Buscar",
+            "description": "Filtra por Nombre con Contains. El valor de ejemplo coincide con las semillas de Script.sql."
+          }
+        },
+        {
+          "name": "Borrar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}",
+                "description": "El servicio lo lee para la auditoria. Sin esta cabecera el rastro queda a nombre de \"sistema\"."
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"Id\": 1\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{servicio}}/Marcas/Borrar",
+            "description": "Exige Id != 0. Falla si otra tabla referencia la fila."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Materiales",
+      "item": [
+        {
+          "name": "Insertar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}",
+                "description": "El servicio lo lee para la auditoria. Sin esta cabecera el rastro queda a nombre de \"sistema\"."
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"Nombre\": \"Licra\",\r\n  \"Descripcion\": \"Creado desde Postman\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{servicio}}/Materiales/Insertar",
+            "description": "Exige Id = 0 y que los campos obligatorios vengan llenos. Devuelve la entidad con el Id que asigno la base."
+          }
+        },
+        {
+          "name": "Actualizar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}",
+                "description": "El servicio lo lee para la auditoria. Sin esta cabecera el rastro queda a nombre de \"sistema\"."
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"Id\": 1,\r\n  \"Nombre\": \"Licra\",\r\n  \"Descripcion\": \"Creado desde Postman\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{servicio}}/Materiales/Actualizar",
+            "description": "Exige Id != 0. Cambie el Id por uno que exista."
+          }
+        },
+        {
+          "name": "Consultar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}",
+                "description": "El servicio lo lee para la auditoria. Sin esta cabecera el rastro queda a nombre de \"sistema\"."
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{servicio}}/Materiales/Consultar",
+            "description": "Devuelve las primeras 5 filas con las navegaciones de FK resueltas. El cuerpo se manda vacio porque el metodo no lo usa."
+          }
+        },
+        {
+          "name": "Buscar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}",
+                "description": "El servicio lo lee para la auditoria. Sin esta cabecera el rastro queda a nombre de \"sistema\"."
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"Nombre\": \"Power\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{servicio}}/Materiales/Buscar",
+            "description": "Filtra por Nombre con Contains. El valor de ejemplo coincide con las semillas de Script.sql."
+          }
+        },
+        {
+          "name": "Borrar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}",
+                "description": "El servicio lo lee para la auditoria. Sin esta cabecera el rastro queda a nombre de \"sistema\"."
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"Id\": 1\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{servicio}}/Materiales/Borrar",
+            "description": "Exige Id != 0. Falla si otra tabla referencia la fila."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Medidas",
+      "item": [
+        {
+          "name": "Insertar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}",
+                "description": "El servicio lo lee para la auditoria. Sin esta cabecera el rastro queda a nombre de \"sistema\"."
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"Cliente\": 1,\r\n  \"Cintura\": 80.0,\r\n  \"Cadera\": 95.0,\r\n  \"Busto\": 88.0,\r\n  \"Fecha\": \"2026-11-22T10:00:00\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{servicio}}/Medidas/Insertar",
+            "description": "Exige Id = 0 y que los campos obligatorios vengan llenos. Devuelve la entidad con el Id que asigno la base."
+          }
+        },
+        {
+          "name": "Actualizar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}",
+                "description": "El servicio lo lee para la auditoria. Sin esta cabecera el rastro queda a nombre de \"sistema\"."
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"Id\": 1,\r\n  \"Cliente\": 1,\r\n  \"Cintura\": 80.0,\r\n  \"Cadera\": 95.0,\r\n  \"Busto\": 88.0,\r\n  \"Fecha\": \"2026-11-22T10:00:00\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{servicio}}/Medidas/Actualizar",
+            "description": "Exige Id != 0. Cambie el Id por uno que exista."
+          }
+        },
+        {
+          "name": "Consultar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}",
+                "description": "El servicio lo lee para la auditoria. Sin esta cabecera el rastro queda a nombre de \"sistema\"."
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{servicio}}/Medidas/Consultar",
+            "description": "Devuelve las primeras 5 filas con las navegaciones de FK resueltas. El cuerpo se manda vacio porque el metodo no lo usa."
+          }
+        },
+        {
+          "name": "Buscar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}",
+                "description": "El servicio lo lee para la auditoria. Sin esta cabecera el rastro queda a nombre de \"sistema\"."
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"Filtro\": \"Maria\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{servicio}}/Medidas/Buscar",
+            "description": "Filtra por Filtro con Contains. El valor de ejemplo coincide con las semillas de Script.sql."
+          }
+        },
+        {
+          "name": "Borrar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}",
+                "description": "El servicio lo lee para la auditoria. Sin esta cabecera el rastro queda a nombre de \"sistema\"."
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"Id\": 1\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{servicio}}/Medidas/Borrar",
+            "description": "Exige Id != 0. Falla si otra tabla referencia la fila."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Metodos_Pago",
+      "item": [
+        {
+          "name": "Insertar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}",
+                "description": "El servicio lo lee para la auditoria. Sin esta cabecera el rastro queda a nombre de \"sistema\"."
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"Nombre\": \"Nequi\",\r\n  \"Descripcion\": \"Creado desde Postman\",\r\n  \"Estado\": true\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{servicio}}/Metodos_Pago/Insertar",
+            "description": "Exige Id = 0 y que los campos obligatorios vengan llenos. Devuelve la entidad con el Id que asigno la base."
+          }
+        },
+        {
+          "name": "Actualizar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}",
+                "description": "El servicio lo lee para la auditoria. Sin esta cabecera el rastro queda a nombre de \"sistema\"."
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"Id\": 1,\r\n  \"Nombre\": \"Nequi\",\r\n  \"Descripcion\": \"Creado desde Postman\",\r\n  \"Estado\": true\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{servicio}}/Metodos_Pago/Actualizar",
+            "description": "Exige Id != 0. Cambie el Id por uno que exista."
+          }
+        },
+        {
+          "name": "Consultar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}",
+                "description": "El servicio lo lee para la auditoria. Sin esta cabecera el rastro queda a nombre de \"sistema\"."
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{servicio}}/Metodos_Pago/Consultar",
+            "description": "Devuelve las primeras 5 filas con las navegaciones de FK resueltas. El cuerpo se manda vacio porque el metodo no lo usa."
+          }
+        },
+        {
+          "name": "Buscar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}",
+                "description": "El servicio lo lee para la auditoria. Sin esta cabecera el rastro queda a nombre de \"sistema\"."
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"Nombre\": \"Efec\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{servicio}}/Metodos_Pago/Buscar",
+            "description": "Filtra por Nombre con Contains. El valor de ejemplo coincide con las semillas de Script.sql."
+          }
+        },
+        {
+          "name": "Borrar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}",
+                "description": "El servicio lo lee para la auditoria. Sin esta cabecera el rastro queda a nombre de \"sistema\"."
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"Id\": 1\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{servicio}}/Metodos_Pago/Borrar",
+            "description": "Exige Id != 0. Falla si otra tabla referencia la fila."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Pagos",
+      "item": [
+        {
+          "name": "Insertar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}",
+                "description": "El servicio lo lee para la auditoria. Sin esta cabecera el rastro queda a nombre de \"sistema\"."
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"Venta\": 1,\r\n  \"Metodo_Pago\": 1,\r\n  \"Valor\": 150000.0,\r\n  \"Fecha\": \"2026-11-22T10:00:00\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{servicio}}/Pagos/Insertar",
+            "description": "Exige Id = 0 y que los campos obligatorios vengan llenos. Devuelve la entidad con el Id que asigno la base."
+          }
+        },
+        {
+          "name": "Actualizar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}",
+                "description": "El servicio lo lee para la auditoria. Sin esta cabecera el rastro queda a nombre de \"sistema\"."
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"Id\": 1,\r\n  \"Venta\": 1,\r\n  \"Metodo_Pago\": 1,\r\n  \"Valor\": 150000.0,\r\n  \"Fecha\": \"2026-11-22T10:00:00\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{servicio}}/Pagos/Actualizar",
+            "description": "Exige Id != 0. Cambie el Id por uno que exista."
+          }
+        },
+        {
+          "name": "Consultar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}",
+                "description": "El servicio lo lee para la auditoria. Sin esta cabecera el rastro queda a nombre de \"sistema\"."
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{servicio}}/Pagos/Consultar",
+            "description": "Devuelve las primeras 5 filas con las navegaciones de FK resueltas. El cuerpo se manda vacio porque el metodo no lo usa."
+          }
+        },
+        {
+          "name": "Buscar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}",
+                "description": "El servicio lo lee para la auditoria. Sin esta cabecera el rastro queda a nombre de \"sistema\"."
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"Filtro\": \"V-\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{servicio}}/Pagos/Buscar",
+            "description": "Filtra por Filtro con Contains. El valor de ejemplo coincide con las semillas de Script.sql."
+          }
+        },
+        {
+          "name": "Borrar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}",
+                "description": "El servicio lo lee para la auditoria. Sin esta cabecera el rastro queda a nombre de \"sistema\"."
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"Id\": 1\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{servicio}}/Pagos/Borrar",
+            "description": "Exige Id != 0. Falla si otra tabla referencia la fila."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Pedidos",
+      "item": [
+        {
+          "name": "Insertar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}",
+                "description": "El servicio lo lee para la auditoria. Sin esta cabecera el rastro queda a nombre de \"sistema\"."
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"Codigo\": \"P-9001\",\r\n  \"Proveedor\": 1,\r\n  \"Empleado\": 1,\r\n  \"Fecha\": \"2026-11-22T10:00:00\",\r\n  \"Estado\": \"Pendiente\",\r\n  \"Total\": 150000.0\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{servicio}}/Pedidos/Insertar",
+            "description": "Exige Id = 0 y que los campos obligatorios vengan llenos. Devuelve la entidad con el Id que asigno la base."
+          }
+        },
+        {
+          "name": "Actualizar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}",
+                "description": "El servicio lo lee para la auditoria. Sin esta cabecera el rastro queda a nombre de \"sistema\"."
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"Id\": 1,\r\n  \"Codigo\": \"P-9001\",\r\n  \"Proveedor\": 1,\r\n  \"Empleado\": 1,\r\n  \"Fecha\": \"2026-11-22T10:00:00\",\r\n  \"Estado\": \"Pendiente\",\r\n  \"Total\": 150000.0\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{servicio}}/Pedidos/Actualizar",
+            "description": "Exige Id != 0. Cambie el Id por uno que exista."
+          }
+        },
+        {
+          "name": "Consultar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}",
+                "description": "El servicio lo lee para la auditoria. Sin esta cabecera el rastro queda a nombre de \"sistema\"."
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{servicio}}/Pedidos/Consultar",
+            "description": "Devuelve las primeras 5 filas con las navegaciones de FK resueltas. El cuerpo se manda vacio porque el metodo no lo usa."
+          }
+        },
+        {
+          "name": "Buscar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}",
+                "description": "El servicio lo lee para la auditoria. Sin esta cabecera el rastro queda a nombre de \"sistema\"."
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"Codigo\": \"P-\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{servicio}}/Pedidos/Buscar",
+            "description": "Filtra por Codigo con Contains. El valor de ejemplo coincide con las semillas de Script.sql."
+          }
+        },
+        {
+          "name": "Borrar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}",
+                "description": "El servicio lo lee para la auditoria. Sin esta cabecera el rastro queda a nombre de \"sistema\"."
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"Id\": 1\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{servicio}}/Pedidos/Borrar",
+            "description": "Exige Id != 0. Falla si otra tabla referencia la fila."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Permisos",
+      "item": [
+        {
+          "name": "Insertar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}",
+                "description": "El servicio lo lee para la auditoria. Sin esta cabecera el rastro queda a nombre de \"sistema\"."
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"Rol\": 1,\r\n  \"Modulo\": \"Cargos\",\r\n  \"Consultar\": true,\r\n  \"Insertar\": true,\r\n  \"Actualizar\": true,\r\n  \"Borrar\": true\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{servicio}}/Permisos/Insertar",
+            "description": "Exige Id = 0 y que los campos obligatorios vengan llenos. Devuelve la entidad con el Id que asigno la base."
+          }
+        },
+        {
+          "name": "Actualizar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}",
+                "description": "El servicio lo lee para la auditoria. Sin esta cabecera el rastro queda a nombre de \"sistema\"."
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"Id\": 1,\r\n  \"Rol\": 1,\r\n  \"Modulo\": \"Cargos\",\r\n  \"Consultar\": true,\r\n  \"Insertar\": true,\r\n  \"Actualizar\": true,\r\n  \"Borrar\": true\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{servicio}}/Permisos/Actualizar",
+            "description": "Exige Id != 0. Cambie el Id por uno que exista."
+          }
+        },
+        {
+          "name": "Consultar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}",
+                "description": "El servicio lo lee para la auditoria. Sin esta cabecera el rastro queda a nombre de \"sistema\"."
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{servicio}}/Permisos/Consultar",
+            "description": "Devuelve las primeras 5 filas con las navegaciones de FK resueltas. El cuerpo se manda vacio porque el metodo no lo usa."
+          }
+        },
+        {
+          "name": "Buscar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}",
+                "description": "El servicio lo lee para la auditoria. Sin esta cabecera el rastro queda a nombre de \"sistema\"."
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"Modulo\": \"Cargos\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{servicio}}/Permisos/Buscar",
+            "description": "Filtra por Modulo con Contains. El valor de ejemplo coincide con las semillas de Script.sql."
+          }
+        },
+        {
+          "name": "Borrar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}",
+                "description": "El servicio lo lee para la auditoria. Sin esta cabecera el rastro queda a nombre de \"sistema\"."
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"Id\": 1\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{servicio}}/Permisos/Borrar",
+            "description": "Exige Id != 0. Falla si otra tabla referencia la fila."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Productos",
+      "item": [
+        {
+          "name": "Insertar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}",
+                "description": "El servicio lo lee para la auditoria. Sin esta cabecera el rastro queda a nombre de \"sistema\"."
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"Codigo\": \"POST-9001\",\r\n  \"Nombre\": \"Faja Postman\",\r\n  \"Descripcion\": \"Creado desde Postman\",\r\n  \"Precio\": 150000.0,\r\n  \"Estado\": true,\r\n  \"Categoria\": 1,\r\n  \"Marca\": 1,\r\n  \"Material\": 1\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{servicio}}/Productos/Insertar",
+            "description": "Exige Id = 0 y que los campos obligatorios vengan llenos. Devuelve la entidad con el Id que asigno la base."
+          }
+        },
+        {
+          "name": "Actualizar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}",
+                "description": "El servicio lo lee para la auditoria. Sin esta cabecera el rastro queda a nombre de \"sistema\"."
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"Id\": 1,\r\n  \"Codigo\": \"POST-9001\",\r\n  \"Nombre\": \"Faja Postman\",\r\n  \"Descripcion\": \"Creado desde Postman\",\r\n  \"Precio\": 150000.0,\r\n  \"Estado\": true,\r\n  \"Categoria\": 1,\r\n  \"Marca\": 1,\r\n  \"Material\": 1\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{servicio}}/Productos/Actualizar",
+            "description": "Exige Id != 0. Cambie el Id por uno que exista."
+          }
+        },
+        {
+          "name": "Consultar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}",
+                "description": "El servicio lo lee para la auditoria. Sin esta cabecera el rastro queda a nombre de \"sistema\"."
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{servicio}}/Productos/Consultar",
+            "description": "Devuelve las primeras 5 filas con las navegaciones de FK resueltas. El cuerpo se manda vacio porque el metodo no lo usa."
+          }
+        },
+        {
+          "name": "Buscar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}",
+                "description": "El servicio lo lee para la auditoria. Sin esta cabecera el rastro queda a nombre de \"sistema\"."
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"Nombre\": \"Faja\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{servicio}}/Productos/Buscar",
+            "description": "Filtra por Nombre con Contains. El valor de ejemplo coincide con las semillas de Script.sql."
+          }
+        },
+        {
+          "name": "Borrar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}",
+                "description": "El servicio lo lee para la auditoria. Sin esta cabecera el rastro queda a nombre de \"sistema\"."
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"Id\": 1\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{servicio}}/Productos/Borrar",
+            "description": "Exige Id != 0. Falla si otra tabla referencia la fila."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Proveedores",
+      "item": [
+        {
+          "name": "Insertar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}",
+                "description": "El servicio lo lee para la auditoria. Sin esta cabecera el rastro queda a nombre de \"sistema\"."
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"Nit\": \"900999888-1\",\r\n  \"Nombre_Empresa\": \"Nueva Empresa SAS\",\r\n  \"Telefono\": \"3001234567\",\r\n  \"Correo\": \"nuevo@correo.com\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{servicio}}/Proveedores/Insertar",
+            "description": "Exige Id = 0 y que los campos obligatorios vengan llenos. Devuelve la entidad con el Id que asigno la base."
+          }
+        },
+        {
+          "name": "Actualizar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}",
+                "description": "El servicio lo lee para la auditoria. Sin esta cabecera el rastro queda a nombre de \"sistema\"."
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"Id\": 1,\r\n  \"Nit\": \"900999888-1\",\r\n  \"Nombre_Empresa\": \"Nueva Empresa SAS\",\r\n  \"Telefono\": \"3001234567\",\r\n  \"Correo\": \"nuevo@correo.com\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{servicio}}/Proveedores/Actualizar",
+            "description": "Exige Id != 0. Cambie el Id por uno que exista."
+          }
+        },
+        {
+          "name": "Consultar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}",
+                "description": "El servicio lo lee para la auditoria. Sin esta cabecera el rastro queda a nombre de \"sistema\"."
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{servicio}}/Proveedores/Consultar",
+            "description": "Devuelve las primeras 5 filas con las navegaciones de FK resueltas. El cuerpo se manda vacio porque el metodo no lo usa."
+          }
+        },
+        {
+          "name": "Buscar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}",
+                "description": "El servicio lo lee para la auditoria. Sin esta cabecera el rastro queda a nombre de \"sistema\"."
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"Nombre_Empresa\": \"Moldeate\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{servicio}}/Proveedores/Buscar",
+            "description": "Filtra por Nombre_Empresa con Contains. El valor de ejemplo coincide con las semillas de Script.sql."
+          }
+        },
+        {
+          "name": "Borrar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}",
+                "description": "El servicio lo lee para la auditoria. Sin esta cabecera el rastro queda a nombre de \"sistema\"."
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"Id\": 1\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{servicio}}/Proveedores/Borrar",
+            "description": "Exige Id != 0. Falla si otra tabla referencia la fila."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Roles",
+      "item": [
+        {
+          "name": "Insertar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}",
+                "description": "El servicio lo lee para la auditoria. Sin esta cabecera el rastro queda a nombre de \"sistema\"."
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"Nombre\": \"Auditor\",\r\n  \"Descripcion\": \"Creado desde Postman\",\r\n  \"Estado\": true\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{servicio}}/Roles/Insertar",
+            "description": "Exige Id = 0 y que los campos obligatorios vengan llenos. Devuelve la entidad con el Id que asigno la base."
+          }
+        },
+        {
+          "name": "Actualizar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}",
+                "description": "El servicio lo lee para la auditoria. Sin esta cabecera el rastro queda a nombre de \"sistema\"."
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"Id\": 1,\r\n  \"Nombre\": \"Auditor\",\r\n  \"Descripcion\": \"Creado desde Postman\",\r\n  \"Estado\": true\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{servicio}}/Roles/Actualizar",
+            "description": "Exige Id != 0. Cambie el Id por uno que exista."
+          }
+        },
+        {
+          "name": "Consultar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}",
+                "description": "El servicio lo lee para la auditoria. Sin esta cabecera el rastro queda a nombre de \"sistema\"."
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{servicio}}/Roles/Consultar",
+            "description": "Devuelve las primeras 5 filas con las navegaciones de FK resueltas. El cuerpo se manda vacio porque el metodo no lo usa."
+          }
+        },
+        {
+          "name": "Buscar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}",
+                "description": "El servicio lo lee para la auditoria. Sin esta cabecera el rastro queda a nombre de \"sistema\"."
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"Nombre\": \"Admin\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{servicio}}/Roles/Buscar",
+            "description": "Filtra por Nombre con Contains. El valor de ejemplo coincide con las semillas de Script.sql."
+          }
+        },
+        {
+          "name": "Borrar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}",
+                "description": "El servicio lo lee para la auditoria. Sin esta cabecera el rastro queda a nombre de \"sistema\"."
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"Id\": 1\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{servicio}}/Roles/Borrar",
+            "description": "Exige Id != 0. Falla si otra tabla referencia la fila."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Sucursales",
+      "item": [
+        {
+          "name": "Insertar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}",
+                "description": "El servicio lo lee para la auditoria. Sin esta cabecera el rastro queda a nombre de \"sistema\"."
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"Nombre\": \"Sucursal Norte\",\r\n  \"Direccion\": \"Calle 1 # 2-3\",\r\n  \"Ciudad\": \"Medellin\",\r\n  \"Telefono\": \"3001234567\",\r\n  \"Estado\": true\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{servicio}}/Sucursales/Insertar",
+            "description": "Exige Id = 0 y que los campos obligatorios vengan llenos. Devuelve la entidad con el Id que asigno la base."
+          }
+        },
+        {
+          "name": "Actualizar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}",
+                "description": "El servicio lo lee para la auditoria. Sin esta cabecera el rastro queda a nombre de \"sistema\"."
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"Id\": 1,\r\n  \"Nombre\": \"Sucursal Norte\",\r\n  \"Direccion\": \"Calle 1 # 2-3\",\r\n  \"Ciudad\": \"Medellin\",\r\n  \"Telefono\": \"3001234567\",\r\n  \"Estado\": true\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{servicio}}/Sucursales/Actualizar",
+            "description": "Exige Id != 0. Cambie el Id por uno que exista."
+          }
+        },
+        {
+          "name": "Consultar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}",
+                "description": "El servicio lo lee para la auditoria. Sin esta cabecera el rastro queda a nombre de \"sistema\"."
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{servicio}}/Sucursales/Consultar",
+            "description": "Devuelve las primeras 5 filas con las navegaciones de FK resueltas. El cuerpo se manda vacio porque el metodo no lo usa."
+          }
+        },
+        {
+          "name": "Buscar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}",
+                "description": "El servicio lo lee para la auditoria. Sin esta cabecera el rastro queda a nombre de \"sistema\"."
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"Nombre\": \"Centro\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{servicio}}/Sucursales/Buscar",
+            "description": "Filtra por Nombre con Contains. El valor de ejemplo coincide con las semillas de Script.sql."
+          }
+        },
+        {
+          "name": "Borrar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}",
+                "description": "El servicio lo lee para la auditoria. Sin esta cabecera el rastro queda a nombre de \"sistema\"."
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"Id\": 1\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{servicio}}/Sucursales/Borrar",
+            "description": "Exige Id != 0. Falla si otra tabla referencia la fila."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Tallas",
+      "item": [
+        {
+          "name": "Insertar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}",
+                "description": "El servicio lo lee para la auditoria. Sin esta cabecera el rastro queda a nombre de \"sistema\"."
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"Nombre\": \"XL\",\r\n  \"Descripcion\": \"Creado desde Postman\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{servicio}}/Tallas/Insertar",
+            "description": "Exige Id = 0 y que los campos obligatorios vengan llenos. Devuelve la entidad con el Id que asigno la base."
+          }
+        },
+        {
+          "name": "Actualizar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}",
+                "description": "El servicio lo lee para la auditoria. Sin esta cabecera el rastro queda a nombre de \"sistema\"."
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"Id\": 1,\r\n  \"Nombre\": \"XL\",\r\n  \"Descripcion\": \"Creado desde Postman\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{servicio}}/Tallas/Actualizar",
+            "description": "Exige Id != 0. Cambie el Id por uno que exista."
+          }
+        },
+        {
+          "name": "Consultar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}",
+                "description": "El servicio lo lee para la auditoria. Sin esta cabecera el rastro queda a nombre de \"sistema\"."
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{servicio}}/Tallas/Consultar",
+            "description": "Devuelve las primeras 5 filas con las navegaciones de FK resueltas. El cuerpo se manda vacio porque el metodo no lo usa."
+          }
+        },
+        {
+          "name": "Buscar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}",
+                "description": "El servicio lo lee para la auditoria. Sin esta cabecera el rastro queda a nombre de \"sistema\"."
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"Nombre\": \"M\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{servicio}}/Tallas/Buscar",
+            "description": "Filtra por Nombre con Contains. El valor de ejemplo coincide con las semillas de Script.sql."
+          }
+        },
+        {
+          "name": "Borrar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}",
+                "description": "El servicio lo lee para la auditoria. Sin esta cabecera el rastro queda a nombre de \"sistema\"."
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"Id\": 1\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{servicio}}/Tallas/Borrar",
+            "description": "Exige Id != 0. Falla si otra tabla referencia la fila."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Usuarios",
+      "item": [
+        {
+          "name": "Insertar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}",
+                "description": "El servicio lo lee para la auditoria. Sin esta cabecera el rastro queda a nombre de \"sistema\"."
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"Correo\": \"nuevo@correo.com\",\r\n  \"Nombre\": \"Usuario Postman\",\r\n  \"Clave\": \"Clave.123\",\r\n  \"Rol\": 1,\r\n  \"Estado\": true\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{servicio}}/Usuarios/Insertar",
+            "description": "Exige Id = 0 y que los campos obligatorios vengan llenos. Devuelve la entidad con el Id que asigno la base."
+          }
+        },
+        {
+          "name": "Actualizar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}",
+                "description": "El servicio lo lee para la auditoria. Sin esta cabecera el rastro queda a nombre de \"sistema\"."
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"Id\": 1,\r\n  \"Correo\": \"nuevo@correo.com\",\r\n  \"Nombre\": \"Usuario Postman\",\r\n  \"Clave\": \"Clave.123\",\r\n  \"Rol\": 1,\r\n  \"Estado\": true\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{servicio}}/Usuarios/Actualizar",
+            "description": "Exige Id != 0. Cambie el Id por uno que exista."
+          }
+        },
+        {
+          "name": "Consultar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}",
+                "description": "El servicio lo lee para la auditoria. Sin esta cabecera el rastro queda a nombre de \"sistema\"."
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{servicio}}/Usuarios/Consultar",
+            "description": "Devuelve las primeras 5 filas con las navegaciones de FK resueltas. El cuerpo se manda vacio porque el metodo no lo usa."
+          }
+        },
+        {
+          "name": "Buscar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}",
+                "description": "El servicio lo lee para la auditoria. Sin esta cabecera el rastro queda a nombre de \"sistema\"."
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"Correo\": \"admin\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{servicio}}/Usuarios/Buscar",
+            "description": "Filtra por Correo con Contains. El valor de ejemplo coincide con las semillas de Script.sql."
+          }
+        },
+        {
+          "name": "Borrar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}",
+                "description": "El servicio lo lee para la auditoria. Sin esta cabecera el rastro queda a nombre de \"sistema\"."
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"Id\": 1\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{servicio}}/Usuarios/Borrar",
+            "description": "Exige Id != 0. Falla si otra tabla referencia la fila."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Variantes",
+      "item": [
+        {
+          "name": "Insertar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}",
+                "description": "El servicio lo lee para la auditoria. Sin esta cabecera el rastro queda a nombre de \"sistema\"."
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"Sku\": \"POST-9001-XL-NEG\",\r\n  \"Producto\": 1,\r\n  \"Talla\": 1,\r\n  \"Color\": 1,\r\n  \"Precio_Adicional\": 0.0\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{servicio}}/Variantes/Insertar",
+            "description": "Exige Id = 0 y que los campos obligatorios vengan llenos. Devuelve la entidad con el Id que asigno la base."
+          }
+        },
+        {
+          "name": "Actualizar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}",
+                "description": "El servicio lo lee para la auditoria. Sin esta cabecera el rastro queda a nombre de \"sistema\"."
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"Id\": 1,\r\n  \"Sku\": \"POST-9001-XL-NEG\",\r\n  \"Producto\": 1,\r\n  \"Talla\": 1,\r\n  \"Color\": 1,\r\n  \"Precio_Adicional\": 0.0\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{servicio}}/Variantes/Actualizar",
+            "description": "Exige Id != 0. Cambie el Id por uno que exista."
+          }
+        },
+        {
+          "name": "Consultar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}",
+                "description": "El servicio lo lee para la auditoria. Sin esta cabecera el rastro queda a nombre de \"sistema\"."
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{servicio}}/Variantes/Consultar",
+            "description": "Devuelve las primeras 5 filas con las navegaciones de FK resueltas. El cuerpo se manda vacio porque el metodo no lo usa."
+          }
+        },
+        {
+          "name": "Buscar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}",
+                "description": "El servicio lo lee para la auditoria. Sin esta cabecera el rastro queda a nombre de \"sistema\"."
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"Sku\": \"FAJ-001\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{servicio}}/Variantes/Buscar",
+            "description": "Filtra por Sku con Contains. El valor de ejemplo coincide con las semillas de Script.sql."
+          }
+        },
+        {
+          "name": "Borrar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}",
+                "description": "El servicio lo lee para la auditoria. Sin esta cabecera el rastro queda a nombre de \"sistema\"."
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"Id\": 1\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{servicio}}/Variantes/Borrar",
+            "description": "Exige Id != 0. Falla si otra tabla referencia la fila."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Ventas",
+      "item": [
+        {
+          "name": "Insertar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}",
+                "description": "El servicio lo lee para la auditoria. Sin esta cabecera el rastro queda a nombre de \"sistema\"."
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"Codigo\": \"V-9001\",\r\n  \"Cliente\": 1,\r\n  \"Empleado\": 1,\r\n  \"Fecha\": \"2026-11-22T10:00:00\",\r\n  \"Total\": 150000.0\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{servicio}}/Ventas/Insertar",
+            "description": "Exige Id = 0 y que los campos obligatorios vengan llenos. Devuelve la entidad con el Id que asigno la base."
+          }
+        },
+        {
+          "name": "Actualizar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}",
+                "description": "El servicio lo lee para la auditoria. Sin esta cabecera el rastro queda a nombre de \"sistema\"."
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"Id\": 1,\r\n  \"Codigo\": \"V-9001\",\r\n  \"Cliente\": 1,\r\n  \"Empleado\": 1,\r\n  \"Fecha\": \"2026-11-22T10:00:00\",\r\n  \"Total\": 150000.0\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{servicio}}/Ventas/Actualizar",
+            "description": "Exige Id != 0. Cambie el Id por uno que exista."
+          }
+        },
+        {
+          "name": "Consultar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}",
+                "description": "El servicio lo lee para la auditoria. Sin esta cabecera el rastro queda a nombre de \"sistema\"."
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{servicio}}/Ventas/Consultar",
+            "description": "Devuelve las primeras 5 filas con las navegaciones de FK resueltas. El cuerpo se manda vacio porque el metodo no lo usa."
+          }
+        },
+        {
+          "name": "Buscar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}",
+                "description": "El servicio lo lee para la auditoria. Sin esta cabecera el rastro queda a nombre de \"sistema\"."
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"Codigo\": \"V-\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{servicio}}/Ventas/Buscar",
+            "description": "Filtra por Codigo con Contains. El valor de ejemplo coincide con las semillas de Script.sql."
+          }
+        },
+        {
+          "name": "Borrar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}",
+                "description": "El servicio lo lee para la auditoria. Sin esta cabecera el rastro queda a nombre de \"sistema\"."
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"Id\": 1\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{servicio}}/Ventas/Borrar",
+            "description": "Exige Id != 0. Falla si otra tabla referencia la fila."
+          }
+        }
+      ]
+    }
+  ]
+}
