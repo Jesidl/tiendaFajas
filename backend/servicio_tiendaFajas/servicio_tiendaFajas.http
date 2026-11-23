@@ -1,0 +1,1393 @@
+@servicio = http://localhost:5250
+@usuario = admin@tiendafajas.com
+
+# Todos los endpoints son POST con cuerpo JSON, incluidos Consultar y
+# Buscar: es la convencion del servicio. Desde el navegador responden 405.
+#
+# La cabecera X-Usuario es la que el servicio registra en la auditoria.
+
+### Auditorias
+
+POST {{servicio}}/Auditorias/Insertar
+Content-Type: application/json
+X-Usuario: {{usuario}}
+
+{
+  "Entidad": "Cargos",
+  "Llave": 1,
+  "Operacion": "Insertar",
+  "Usuario": "admin@tiendafajas.com",
+  "Fecha": "2026-11-22T10:00:00",
+  "Datos": "Nombre=valor; Descripcion=valor"
+}
+
+###
+
+POST {{servicio}}/Auditorias/Actualizar
+Content-Type: application/json
+X-Usuario: {{usuario}}
+
+{
+  "Id": 1,
+  "Entidad": "Cargos",
+  "Llave": 1,
+  "Operacion": "Insertar",
+  "Usuario": "admin@tiendafajas.com",
+  "Fecha": "2026-11-22T10:00:00",
+  "Datos": "Nombre=valor; Descripcion=valor"
+}
+
+###
+
+POST {{servicio}}/Auditorias/Consultar
+Content-Type: application/json
+X-Usuario: {{usuario}}
+
+{}
+
+###
+
+POST {{servicio}}/Auditorias/Buscar
+Content-Type: application/json
+X-Usuario: {{usuario}}
+
+{
+  "Entidad": "Cargos"
+}
+
+###
+
+POST {{servicio}}/Auditorias/Borrar
+Content-Type: application/json
+X-Usuario: {{usuario}}
+
+{
+  "Id": 1
+}
+
+###
+
+### Cargos
+
+POST {{servicio}}/Cargos/Insertar
+Content-Type: application/json
+X-Usuario: {{usuario}}
+
+{
+  "Nombre": "Bodeguero",
+  "Descripcion": "Creado desde Postman",
+  "Salario": 1500000.0
+}
+
+###
+
+POST {{servicio}}/Cargos/Actualizar
+Content-Type: application/json
+X-Usuario: {{usuario}}
+
+{
+  "Id": 1,
+  "Nombre": "Bodeguero",
+  "Descripcion": "Creado desde Postman",
+  "Salario": 1500000.0
+}
+
+###
+
+POST {{servicio}}/Cargos/Consultar
+Content-Type: application/json
+X-Usuario: {{usuario}}
+
+{}
+
+###
+
+POST {{servicio}}/Cargos/Buscar
+Content-Type: application/json
+X-Usuario: {{usuario}}
+
+{
+  "Nombre": "Asesora"
+}
+
+###
+
+POST {{servicio}}/Cargos/Borrar
+Content-Type: application/json
+X-Usuario: {{usuario}}
+
+{
+  "Id": 1
+}
+
+###
+
+### Categorias
+
+POST {{servicio}}/Categorias/Insertar
+Content-Type: application/json
+X-Usuario: {{usuario}}
+
+{
+  "Nombre": "Deportivas",
+  "Descripcion": "Creado desde Postman",
+  "Estado": true
+}
+
+###
+
+POST {{servicio}}/Categorias/Actualizar
+Content-Type: application/json
+X-Usuario: {{usuario}}
+
+{
+  "Id": 1,
+  "Nombre": "Deportivas",
+  "Descripcion": "Creado desde Postman",
+  "Estado": true
+}
+
+###
+
+POST {{servicio}}/Categorias/Consultar
+Content-Type: application/json
+X-Usuario: {{usuario}}
+
+{}
+
+###
+
+POST {{servicio}}/Categorias/Buscar
+Content-Type: application/json
+X-Usuario: {{usuario}}
+
+{
+  "Nombre": "Post"
+}
+
+###
+
+POST {{servicio}}/Categorias/Borrar
+Content-Type: application/json
+X-Usuario: {{usuario}}
+
+{
+  "Id": 1
+}
+
+###
+
+### Clientes
+
+POST {{servicio}}/Clientes/Insertar
+Content-Type: application/json
+X-Usuario: {{usuario}}
+
+{
+  "Cedula": "9001",
+  "Nombre": "Cliente Postman",
+  "Telefono": "3001234567",
+  "Correo": "nuevo@correo.com",
+  "Direccion": "Calle 1 # 2-3"
+}
+
+###
+
+POST {{servicio}}/Clientes/Actualizar
+Content-Type: application/json
+X-Usuario: {{usuario}}
+
+{
+  "Id": 1,
+  "Cedula": "9001",
+  "Nombre": "Cliente Postman",
+  "Telefono": "3001234567",
+  "Correo": "nuevo@correo.com",
+  "Direccion": "Calle 1 # 2-3"
+}
+
+###
+
+POST {{servicio}}/Clientes/Consultar
+Content-Type: application/json
+X-Usuario: {{usuario}}
+
+{}
+
+###
+
+POST {{servicio}}/Clientes/Buscar
+Content-Type: application/json
+X-Usuario: {{usuario}}
+
+{
+  "Nombre": "Maria"
+}
+
+###
+
+POST {{servicio}}/Clientes/Borrar
+Content-Type: application/json
+X-Usuario: {{usuario}}
+
+{
+  "Id": 1
+}
+
+###
+
+### Colores
+
+POST {{servicio}}/Colores/Insertar
+Content-Type: application/json
+X-Usuario: {{usuario}}
+
+{
+  "Nombre": "Negro",
+  "Codigo_Hex": "#000000"
+}
+
+###
+
+POST {{servicio}}/Colores/Actualizar
+Content-Type: application/json
+X-Usuario: {{usuario}}
+
+{
+  "Id": 1,
+  "Nombre": "Negro",
+  "Codigo_Hex": "#000000"
+}
+
+###
+
+POST {{servicio}}/Colores/Consultar
+Content-Type: application/json
+X-Usuario: {{usuario}}
+
+{}
+
+###
+
+POST {{servicio}}/Colores/Buscar
+Content-Type: application/json
+X-Usuario: {{usuario}}
+
+{
+  "Nombre": "Bei"
+}
+
+###
+
+POST {{servicio}}/Colores/Borrar
+Content-Type: application/json
+X-Usuario: {{usuario}}
+
+{
+  "Id": 1
+}
+
+###
+
+### Detalles_Pedidos
+
+POST {{servicio}}/Detalles_Pedidos/Insertar
+Content-Type: application/json
+X-Usuario: {{usuario}}
+
+{
+  "Pedido": 1,
+  "Variante": 1,
+  "Cantidad": 1,
+  "Precio_Compra": 90000.0,
+  "Subtotal": 150000.0
+}
+
+###
+
+POST {{servicio}}/Detalles_Pedidos/Actualizar
+Content-Type: application/json
+X-Usuario: {{usuario}}
+
+{
+  "Id": 1,
+  "Pedido": 1,
+  "Variante": 1,
+  "Cantidad": 1,
+  "Precio_Compra": 90000.0,
+  "Subtotal": 150000.0
+}
+
+###
+
+POST {{servicio}}/Detalles_Pedidos/Consultar
+Content-Type: application/json
+X-Usuario: {{usuario}}
+
+{}
+
+###
+
+POST {{servicio}}/Detalles_Pedidos/Buscar
+Content-Type: application/json
+X-Usuario: {{usuario}}
+
+{
+  "Filtro": "P-"
+}
+
+###
+
+POST {{servicio}}/Detalles_Pedidos/Borrar
+Content-Type: application/json
+X-Usuario: {{usuario}}
+
+{
+  "Id": 1
+}
+
+###
+
+### Detalles_Ventas
+
+POST {{servicio}}/Detalles_Ventas/Insertar
+Content-Type: application/json
+X-Usuario: {{usuario}}
+
+{
+  "Venta": 1,
+  "Variante": 1,
+  "Cantidad": 1,
+  "Precio_Unitario": 150000.0,
+  "Subtotal": 150000.0
+}
+
+###
+
+POST {{servicio}}/Detalles_Ventas/Actualizar
+Content-Type: application/json
+X-Usuario: {{usuario}}
+
+{
+  "Id": 1,
+  "Venta": 1,
+  "Variante": 1,
+  "Cantidad": 1,
+  "Precio_Unitario": 150000.0,
+  "Subtotal": 150000.0
+}
+
+###
+
+POST {{servicio}}/Detalles_Ventas/Consultar
+Content-Type: application/json
+X-Usuario: {{usuario}}
+
+{}
+
+###
+
+POST {{servicio}}/Detalles_Ventas/Buscar
+Content-Type: application/json
+X-Usuario: {{usuario}}
+
+{
+  "Filtro": "V-"
+}
+
+###
+
+POST {{servicio}}/Detalles_Ventas/Borrar
+Content-Type: application/json
+X-Usuario: {{usuario}}
+
+{
+  "Id": 1
+}
+
+###
+
+### Empleados
+
+POST {{servicio}}/Empleados/Insertar
+Content-Type: application/json
+X-Usuario: {{usuario}}
+
+{
+  "Cedula": "9001",
+  "Nombre": "Empleado Postman",
+  "Telefono": "3001234567",
+  "Sucursal": 1,
+  "Cargo": 1
+}
+
+###
+
+POST {{servicio}}/Empleados/Actualizar
+Content-Type: application/json
+X-Usuario: {{usuario}}
+
+{
+  "Id": 1,
+  "Cedula": "9001",
+  "Nombre": "Empleado Postman",
+  "Telefono": "3001234567",
+  "Sucursal": 1,
+  "Cargo": 1
+}
+
+###
+
+POST {{servicio}}/Empleados/Consultar
+Content-Type: application/json
+X-Usuario: {{usuario}}
+
+{}
+
+###
+
+POST {{servicio}}/Empleados/Buscar
+Content-Type: application/json
+X-Usuario: {{usuario}}
+
+{
+  "Nombre": "Laura"
+}
+
+###
+
+POST {{servicio}}/Empleados/Borrar
+Content-Type: application/json
+X-Usuario: {{usuario}}
+
+{
+  "Id": 1
+}
+
+###
+
+### Inventarios
+
+POST {{servicio}}/Inventarios/Insertar
+Content-Type: application/json
+X-Usuario: {{usuario}}
+
+{
+  "Variante": 1,
+  "Sucursal": 1,
+  "Cantidad": 1,
+  "Stock_Minimo": 5,
+  "Fecha_Actualizacion": "2026-11-22T10:00:00"
+}
+
+###
+
+POST {{servicio}}/Inventarios/Actualizar
+Content-Type: application/json
+X-Usuario: {{usuario}}
+
+{
+  "Id": 1,
+  "Variante": 1,
+  "Sucursal": 1,
+  "Cantidad": 1,
+  "Stock_Minimo": 5,
+  "Fecha_Actualizacion": "2026-11-22T10:00:00"
+}
+
+###
+
+POST {{servicio}}/Inventarios/Consultar
+Content-Type: application/json
+X-Usuario: {{usuario}}
+
+{}
+
+###
+
+POST {{servicio}}/Inventarios/Buscar
+Content-Type: application/json
+X-Usuario: {{usuario}}
+
+{
+  "Filtro": "FAJ-001"
+}
+
+###
+
+POST {{servicio}}/Inventarios/Borrar
+Content-Type: application/json
+X-Usuario: {{usuario}}
+
+{
+  "Id": 1
+}
+
+###
+
+### Marcas
+
+POST {{servicio}}/Marcas/Insertar
+Content-Type: application/json
+X-Usuario: {{usuario}}
+
+{
+  "Nombre": "Marca Postman",
+  "Pais": "Colombia",
+  "Estado": true
+}
+
+###
+
+POST {{servicio}}/Marcas/Actualizar
+Content-Type: application/json
+X-Usuario: {{usuario}}
+
+{
+  "Id": 1,
+  "Nombre": "Marca Postman",
+  "Pais": "Colombia",
+  "Estado": true
+}
+
+###
+
+POST {{servicio}}/Marcas/Consultar
+Content-Type: application/json
+X-Usuario: {{usuario}}
+
+{}
+
+###
+
+POST {{servicio}}/Marcas/Buscar
+Content-Type: application/json
+X-Usuario: {{usuario}}
+
+{
+  "Nombre": "Salome"
+}
+
+###
+
+POST {{servicio}}/Marcas/Borrar
+Content-Type: application/json
+X-Usuario: {{usuario}}
+
+{
+  "Id": 1
+}
+
+###
+
+### Materiales
+
+POST {{servicio}}/Materiales/Insertar
+Content-Type: application/json
+X-Usuario: {{usuario}}
+
+{
+  "Nombre": "Licra",
+  "Descripcion": "Creado desde Postman"
+}
+
+###
+
+POST {{servicio}}/Materiales/Actualizar
+Content-Type: application/json
+X-Usuario: {{usuario}}
+
+{
+  "Id": 1,
+  "Nombre": "Licra",
+  "Descripcion": "Creado desde Postman"
+}
+
+###
+
+POST {{servicio}}/Materiales/Consultar
+Content-Type: application/json
+X-Usuario: {{usuario}}
+
+{}
+
+###
+
+POST {{servicio}}/Materiales/Buscar
+Content-Type: application/json
+X-Usuario: {{usuario}}
+
+{
+  "Nombre": "Power"
+}
+
+###
+
+POST {{servicio}}/Materiales/Borrar
+Content-Type: application/json
+X-Usuario: {{usuario}}
+
+{
+  "Id": 1
+}
+
+###
+
+### Medidas
+
+POST {{servicio}}/Medidas/Insertar
+Content-Type: application/json
+X-Usuario: {{usuario}}
+
+{
+  "Cliente": 1,
+  "Cintura": 80.0,
+  "Cadera": 95.0,
+  "Busto": 88.0,
+  "Fecha": "2026-11-22T10:00:00"
+}
+
+###
+
+POST {{servicio}}/Medidas/Actualizar
+Content-Type: application/json
+X-Usuario: {{usuario}}
+
+{
+  "Id": 1,
+  "Cliente": 1,
+  "Cintura": 80.0,
+  "Cadera": 95.0,
+  "Busto": 88.0,
+  "Fecha": "2026-11-22T10:00:00"
+}
+
+###
+
+POST {{servicio}}/Medidas/Consultar
+Content-Type: application/json
+X-Usuario: {{usuario}}
+
+{}
+
+###
+
+POST {{servicio}}/Medidas/Buscar
+Content-Type: application/json
+X-Usuario: {{usuario}}
+
+{
+  "Filtro": "Maria"
+}
+
+###
+
+POST {{servicio}}/Medidas/Borrar
+Content-Type: application/json
+X-Usuario: {{usuario}}
+
+{
+  "Id": 1
+}
+
+###
+
+### Metodos_Pago
+
+POST {{servicio}}/Metodos_Pago/Insertar
+Content-Type: application/json
+X-Usuario: {{usuario}}
+
+{
+  "Nombre": "Nequi",
+  "Descripcion": "Creado desde Postman",
+  "Estado": true
+}
+
+###
+
+POST {{servicio}}/Metodos_Pago/Actualizar
+Content-Type: application/json
+X-Usuario: {{usuario}}
+
+{
+  "Id": 1,
+  "Nombre": "Nequi",
+  "Descripcion": "Creado desde Postman",
+  "Estado": true
+}
+
+###
+
+POST {{servicio}}/Metodos_Pago/Consultar
+Content-Type: application/json
+X-Usuario: {{usuario}}
+
+{}
+
+###
+
+POST {{servicio}}/Metodos_Pago/Buscar
+Content-Type: application/json
+X-Usuario: {{usuario}}
+
+{
+  "Nombre": "Efec"
+}
+
+###
+
+POST {{servicio}}/Metodos_Pago/Borrar
+Content-Type: application/json
+X-Usuario: {{usuario}}
+
+{
+  "Id": 1
+}
+
+###
+
+### Pagos
+
+POST {{servicio}}/Pagos/Insertar
+Content-Type: application/json
+X-Usuario: {{usuario}}
+
+{
+  "Venta": 1,
+  "Metodo_Pago": 1,
+  "Valor": 150000.0,
+  "Fecha": "2026-11-22T10:00:00"
+}
+
+###
+
+POST {{servicio}}/Pagos/Actualizar
+Content-Type: application/json
+X-Usuario: {{usuario}}
+
+{
+  "Id": 1,
+  "Venta": 1,
+  "Metodo_Pago": 1,
+  "Valor": 150000.0,
+  "Fecha": "2026-11-22T10:00:00"
+}
+
+###
+
+POST {{servicio}}/Pagos/Consultar
+Content-Type: application/json
+X-Usuario: {{usuario}}
+
+{}
+
+###
+
+POST {{servicio}}/Pagos/Buscar
+Content-Type: application/json
+X-Usuario: {{usuario}}
+
+{
+  "Filtro": "V-"
+}
+
+###
+
+POST {{servicio}}/Pagos/Borrar
+Content-Type: application/json
+X-Usuario: {{usuario}}
+
+{
+  "Id": 1
+}
+
+###
+
+### Pedidos
+
+POST {{servicio}}/Pedidos/Insertar
+Content-Type: application/json
+X-Usuario: {{usuario}}
+
+{
+  "Codigo": "P-9001",
+  "Proveedor": 1,
+  "Empleado": 1,
+  "Fecha": "2026-11-22T10:00:00",
+  "Estado": "Pendiente",
+  "Total": 150000.0
+}
+
+###
+
+POST {{servicio}}/Pedidos/Actualizar
+Content-Type: application/json
+X-Usuario: {{usuario}}
+
+{
+  "Id": 1,
+  "Codigo": "P-9001",
+  "Proveedor": 1,
+  "Empleado": 1,
+  "Fecha": "2026-11-22T10:00:00",
+  "Estado": "Pendiente",
+  "Total": 150000.0
+}
+
+###
+
+POST {{servicio}}/Pedidos/Consultar
+Content-Type: application/json
+X-Usuario: {{usuario}}
+
+{}
+
+###
+
+POST {{servicio}}/Pedidos/Buscar
+Content-Type: application/json
+X-Usuario: {{usuario}}
+
+{
+  "Codigo": "P-"
+}
+
+###
+
+POST {{servicio}}/Pedidos/Borrar
+Content-Type: application/json
+X-Usuario: {{usuario}}
+
+{
+  "Id": 1
+}
+
+###
+
+### Permisos
+
+POST {{servicio}}/Permisos/Insertar
+Content-Type: application/json
+X-Usuario: {{usuario}}
+
+{
+  "Rol": 1,
+  "Modulo": "Cargos",
+  "Consultar": true,
+  "Insertar": true,
+  "Actualizar": true,
+  "Borrar": true
+}
+
+###
+
+POST {{servicio}}/Permisos/Actualizar
+Content-Type: application/json
+X-Usuario: {{usuario}}
+
+{
+  "Id": 1,
+  "Rol": 1,
+  "Modulo": "Cargos",
+  "Consultar": true,
+  "Insertar": true,
+  "Actualizar": true,
+  "Borrar": true
+}
+
+###
+
+POST {{servicio}}/Permisos/Consultar
+Content-Type: application/json
+X-Usuario: {{usuario}}
+
+{}
+
+###
+
+POST {{servicio}}/Permisos/Buscar
+Content-Type: application/json
+X-Usuario: {{usuario}}
+
+{
+  "Modulo": "Cargos"
+}
+
+###
+
+POST {{servicio}}/Permisos/Borrar
+Content-Type: application/json
+X-Usuario: {{usuario}}
+
+{
+  "Id": 1
+}
+
+###
+
+### Productos
+
+POST {{servicio}}/Productos/Insertar
+Content-Type: application/json
+X-Usuario: {{usuario}}
+
+{
+  "Codigo": "POST-9001",
+  "Nombre": "Faja Postman",
+  "Descripcion": "Creado desde Postman",
+  "Precio": 150000.0,
+  "Estado": true,
+  "Categoria": 1,
+  "Marca": 1,
+  "Material": 1
+}
+
+###
+
+POST {{servicio}}/Productos/Actualizar
+Content-Type: application/json
+X-Usuario: {{usuario}}
+
+{
+  "Id": 1,
+  "Codigo": "POST-9001",
+  "Nombre": "Faja Postman",
+  "Descripcion": "Creado desde Postman",
+  "Precio": 150000.0,
+  "Estado": true,
+  "Categoria": 1,
+  "Marca": 1,
+  "Material": 1
+}
+
+###
+
+POST {{servicio}}/Productos/Consultar
+Content-Type: application/json
+X-Usuario: {{usuario}}
+
+{}
+
+###
+
+POST {{servicio}}/Productos/Buscar
+Content-Type: application/json
+X-Usuario: {{usuario}}
+
+{
+  "Nombre": "Faja"
+}
+
+###
+
+POST {{servicio}}/Productos/Borrar
+Content-Type: application/json
+X-Usuario: {{usuario}}
+
+{
+  "Id": 1
+}
+
+###
+
+### Proveedores
+
+POST {{servicio}}/Proveedores/Insertar
+Content-Type: application/json
+X-Usuario: {{usuario}}
+
+{
+  "Nit": "900999888-1",
+  "Nombre_Empresa": "Nueva Empresa SAS",
+  "Telefono": "3001234567",
+  "Correo": "nuevo@correo.com"
+}
+
+###
+
+POST {{servicio}}/Proveedores/Actualizar
+Content-Type: application/json
+X-Usuario: {{usuario}}
+
+{
+  "Id": 1,
+  "Nit": "900999888-1",
+  "Nombre_Empresa": "Nueva Empresa SAS",
+  "Telefono": "3001234567",
+  "Correo": "nuevo@correo.com"
+}
+
+###
+
+POST {{servicio}}/Proveedores/Consultar
+Content-Type: application/json
+X-Usuario: {{usuario}}
+
+{}
+
+###
+
+POST {{servicio}}/Proveedores/Buscar
+Content-Type: application/json
+X-Usuario: {{usuario}}
+
+{
+  "Nombre_Empresa": "Moldeate"
+}
+
+###
+
+POST {{servicio}}/Proveedores/Borrar
+Content-Type: application/json
+X-Usuario: {{usuario}}
+
+{
+  "Id": 1
+}
+
+###
+
+### Roles
+
+POST {{servicio}}/Roles/Insertar
+Content-Type: application/json
+X-Usuario: {{usuario}}
+
+{
+  "Nombre": "Auditor",
+  "Descripcion": "Creado desde Postman",
+  "Estado": true
+}
+
+###
+
+POST {{servicio}}/Roles/Actualizar
+Content-Type: application/json
+X-Usuario: {{usuario}}
+
+{
+  "Id": 1,
+  "Nombre": "Auditor",
+  "Descripcion": "Creado desde Postman",
+  "Estado": true
+}
+
+###
+
+POST {{servicio}}/Roles/Consultar
+Content-Type: application/json
+X-Usuario: {{usuario}}
+
+{}
+
+###
+
+POST {{servicio}}/Roles/Buscar
+Content-Type: application/json
+X-Usuario: {{usuario}}
+
+{
+  "Nombre": "Admin"
+}
+
+###
+
+POST {{servicio}}/Roles/Borrar
+Content-Type: application/json
+X-Usuario: {{usuario}}
+
+{
+  "Id": 1
+}
+
+###
+
+### Sucursales
+
+POST {{servicio}}/Sucursales/Insertar
+Content-Type: application/json
+X-Usuario: {{usuario}}
+
+{
+  "Nombre": "Sucursal Norte",
+  "Direccion": "Calle 1 # 2-3",
+  "Ciudad": "Medellin",
+  "Telefono": "3001234567",
+  "Estado": true
+}
+
+###
+
+POST {{servicio}}/Sucursales/Actualizar
+Content-Type: application/json
+X-Usuario: {{usuario}}
+
+{
+  "Id": 1,
+  "Nombre": "Sucursal Norte",
+  "Direccion": "Calle 1 # 2-3",
+  "Ciudad": "Medellin",
+  "Telefono": "3001234567",
+  "Estado": true
+}
+
+###
+
+POST {{servicio}}/Sucursales/Consultar
+Content-Type: application/json
+X-Usuario: {{usuario}}
+
+{}
+
+###
+
+POST {{servicio}}/Sucursales/Buscar
+Content-Type: application/json
+X-Usuario: {{usuario}}
+
+{
+  "Nombre": "Centro"
+}
+
+###
+
+POST {{servicio}}/Sucursales/Borrar
+Content-Type: application/json
+X-Usuario: {{usuario}}
+
+{
+  "Id": 1
+}
+
+###
+
+### Tallas
+
+POST {{servicio}}/Tallas/Insertar
+Content-Type: application/json
+X-Usuario: {{usuario}}
+
+{
+  "Nombre": "XL",
+  "Descripcion": "Creado desde Postman"
+}
+
+###
+
+POST {{servicio}}/Tallas/Actualizar
+Content-Type: application/json
+X-Usuario: {{usuario}}
+
+{
+  "Id": 1,
+  "Nombre": "XL",
+  "Descripcion": "Creado desde Postman"
+}
+
+###
+
+POST {{servicio}}/Tallas/Consultar
+Content-Type: application/json
+X-Usuario: {{usuario}}
+
+{}
+
+###
+
+POST {{servicio}}/Tallas/Buscar
+Content-Type: application/json
+X-Usuario: {{usuario}}
+
+{
+  "Nombre": "M"
+}
+
+###
+
+POST {{servicio}}/Tallas/Borrar
+Content-Type: application/json
+X-Usuario: {{usuario}}
+
+{
+  "Id": 1
+}
+
+###
+
+### Usuarios
+
+POST {{servicio}}/Usuarios/Insertar
+Content-Type: application/json
+X-Usuario: {{usuario}}
+
+{
+  "Correo": "nuevo@correo.com",
+  "Nombre": "Usuario Postman",
+  "Clave": "Clave.123",
+  "Rol": 1,
+  "Estado": true
+}
+
+###
+
+POST {{servicio}}/Usuarios/Actualizar
+Content-Type: application/json
+X-Usuario: {{usuario}}
+
+{
+  "Id": 1,
+  "Correo": "nuevo@correo.com",
+  "Nombre": "Usuario Postman",
+  "Clave": "Clave.123",
+  "Rol": 1,
+  "Estado": true
+}
+
+###
+
+POST {{servicio}}/Usuarios/Consultar
+Content-Type: application/json
+X-Usuario: {{usuario}}
+
+{}
+
+###
+
+POST {{servicio}}/Usuarios/Buscar
+Content-Type: application/json
+X-Usuario: {{usuario}}
+
+{
+  "Correo": "admin"
+}
+
+###
+
+POST {{servicio}}/Usuarios/Borrar
+Content-Type: application/json
+X-Usuario: {{usuario}}
+
+{
+  "Id": 1
+}
+
+###
+
+### Variantes
+
+POST {{servicio}}/Variantes/Insertar
+Content-Type: application/json
+X-Usuario: {{usuario}}
+
+{
+  "Sku": "POST-9001-XL-NEG",
+  "Producto": 1,
+  "Talla": 1,
+  "Color": 1,
+  "Precio_Adicional": 0.0
+}
+
+###
+
+POST {{servicio}}/Variantes/Actualizar
+Content-Type: application/json
+X-Usuario: {{usuario}}
+
+{
+  "Id": 1,
+  "Sku": "POST-9001-XL-NEG",
+  "Producto": 1,
+  "Talla": 1,
+  "Color": 1,
+  "Precio_Adicional": 0.0
+}
+
+###
+
+POST {{servicio}}/Variantes/Consultar
+Content-Type: application/json
+X-Usuario: {{usuario}}
+
+{}
+
+###
+
+POST {{servicio}}/Variantes/Buscar
+Content-Type: application/json
+X-Usuario: {{usuario}}
+
+{
+  "Sku": "FAJ-001"
+}
+
+###
+
+POST {{servicio}}/Variantes/Borrar
+Content-Type: application/json
+X-Usuario: {{usuario}}
+
+{
+  "Id": 1
+}
+
+###
+
+### Ventas
+
+POST {{servicio}}/Ventas/Insertar
+Content-Type: application/json
+X-Usuario: {{usuario}}
+
+{
+  "Codigo": "V-9001",
+  "Cliente": 1,
+  "Empleado": 1,
+  "Fecha": "2026-11-22T10:00:00",
+  "Total": 150000.0
+}
+
+###
+
+POST {{servicio}}/Ventas/Actualizar
+Content-Type: application/json
+X-Usuario: {{usuario}}
+
+{
+  "Id": 1,
+  "Codigo": "V-9001",
+  "Cliente": 1,
+  "Empleado": 1,
+  "Fecha": "2026-11-22T10:00:00",
+  "Total": 150000.0
+}
+
+###
+
+POST {{servicio}}/Ventas/Consultar
+Content-Type: application/json
+X-Usuario: {{usuario}}
+
+{}
+
+###
+
+POST {{servicio}}/Ventas/Buscar
+Content-Type: application/json
+X-Usuario: {{usuario}}
+
+{
+  "Codigo": "V-"
+}
+
+###
+
+POST {{servicio}}/Ventas/Borrar
+Content-Type: application/json
+X-Usuario: {{usuario}}
+
+{
+  "Id": 1
+}
+
+###
