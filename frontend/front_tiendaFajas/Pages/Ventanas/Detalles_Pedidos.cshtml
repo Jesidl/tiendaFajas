@@ -1,0 +1,155 @@
+@page
+@model Detalles_PedidosModel
+@{
+    ViewData["Title"] = "Detalles Pedidos";
+}
+<form method="post"
+    enctype="multipart/form-data">
+
+    <div class="text-center">
+        <h1 class="display-4">Detalles Pedidos</h1>
+
+        <input type="submit"
+            value="Buscar"
+            class="btn btn-secondary"
+            asp-page-handler="BtBuscar"/>
+        <input type="submit"
+            value="Nuevo"
+            class="btn btn-secondary"
+            asp-page-handler="BtNuevo"/>
+        <input type="submit"
+            value="Guardar"
+            class="btn btn-secondary"
+            asp-page-handler="BtGuardar"/>
+        <input id="flFiltro"
+            placeholder="Filtro"
+            asp-for="@Model.Filtro!.Filtro"/>
+
+        @if (ViewData.ContainsKey("Mensaje"))
+        {
+            @await Html.PartialAsync("../Emergentes/Mensajes.cshtml");
+        }
+
+        @if (Model.Formulario || Model.Borrar)
+        {
+            <input id="nmId"
+                type="hidden"
+                asp-for="@Model.Actual!.Id" />
+        }
+
+        @if (Model.Formulario)
+        {
+            <div>
+                <h3>Detalles Pedidos</h3>
+
+                <label>
+                    Pedido
+                </label>
+                <select id="nmPedido"
+                    asp-for="@Model.Actual!.Pedido"
+                    asp-items="@(new SelectList(Model.Pedidos, "Id", "Codigo"))">
+                </select>
+                <br />
+
+                <label>
+                    Variante
+                </label>
+                <select id="nmVariante"
+                    asp-for="@Model.Actual!.Variante"
+                    asp-items="@(new SelectList(Model.Variantes, "Id", "Sku"))">
+                </select>
+                <br />
+
+                <label>
+                    Cantidad
+                </label>
+                <input id="nmCantidad"
+                    asp-for="@Model.Actual!.Cantidad" />
+                <br />
+
+                <label>
+                    Precio Compra
+                </label>
+                <input id="nmPrecio_Compra"
+                    asp-for="@Model.Actual!.Precio_Compra" />
+                <br />
+
+                <label>
+                    Subtotal
+                </label>
+                <input id="nmSubtotal"
+                    asp-for="@Model.Actual!.Subtotal" />
+                <br />
+
+            </div>
+        }
+
+        @if (Model.Borrar)
+        {
+            <div class="popup">
+                <div class="pp_del_inner">
+                    <h3>Mensaje</h3>
+
+                    <h4>
+                        ¿Desea borrar el registro?
+                    </h4>
+                    <h6>
+                        @Model.Actual!._Pedido!.Codigo,
+                        @Model.Actual!._Variante!.Sku,
+                        @Model.Actual!.Cantidad
+                    </h6>
+                    <input type="submit"
+                        value="Cancelar"
+                        class="btn btn-secondary"
+                        asp-page-handler="BtBuscar" />
+                    <input type="submit"
+                        value="Borrar"
+                        class="btn btn-secondary"
+                        asp-page-handler="BtBorrar" />
+                </div>
+            </div>
+        }
+
+        @if (!Model.Formulario)
+        {
+            <div class="containers_vn panel panel-default">
+                <table class="tb_data table table-striped table-bordered table-hover">
+                    <tr>
+                        <th>Pedido</th>
+                        <th>Variante</th>
+                        <th>Cantidad</th>
+                        <th>Precio Compra</th>
+                        <th>Subtotal</th>
+                        <th>Acción</th>
+                    </tr>
+                    @if (Model != null && Model.Lista != null)
+                    {
+                        foreach (var elemento in Model.Lista)
+                        {
+                            <tr>
+                                <td>@elemento._Pedido!.Codigo</td>
+                                <td>@elemento._Variante!.Sku</td>
+                                <td>@elemento.Cantidad</td>
+                                <td>@elemento.Precio_Compra</td>
+                                <td>@elemento.Subtotal</td>
+                                <td>
+                                    <input type="submit"
+                                        value="Editar"
+                                        class="btn btn-secondary"
+                                        asp-page-handler="BtEditar"
+                                        asp-route-data="@elemento.Id" />
+                                    <input type="submit"
+                                        value="Borrar"
+                                        class="btn btn-secondary"
+                                        asp-page-handler="BtPregBorrar"
+                                        asp-route-data="@elemento.Id" />
+                                </td>
+                            </tr>
+                        }
+                    }
+                </table>
+            </div>
+        }
+
+    </div>
+</form>
