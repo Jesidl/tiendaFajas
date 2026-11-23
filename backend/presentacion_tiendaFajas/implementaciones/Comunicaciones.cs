@@ -9,7 +9,7 @@ namespace presentacion_tiendaFajas.implementaciones
     {
         public async Task<T> Ejecutar<T>(string url, object entidad)
         {
-            url = "http://localhost:5250/" + url;
+            url = Servidor.Ruta(url);
 
             var body = new StringContent(
                 JsonConvert.SerializeObject(entidad),
