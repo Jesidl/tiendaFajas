@@ -482,6 +482,30 @@ namespace pruebas_tiendaFajas.Nucleo
             };
         }
 
+        /// <summary>
+        /// PNG valido de un pixel. Se usa un archivo real y no bytes al azar
+        /// para que la prueba recorra el mismo camino que una imagen de
+        /// verdad: el controlador valida el tipo de contenido.
+        /// </summary>
+        public static readonly byte[] Png = Convert.FromBase64String(
+            "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8" +
+            "z8DwHwAFAAH/q842iQAAAABJRU5ErkJggg==");
+
+        public Imagenes Imagenes()
+        {
+            var producto = Guardar(this.conexion.Productos!, Productos());
+
+            return new Imagenes
+            {
+                Producto = producto.Id,
+                Nombre = Unico("img", 40) + ".png",
+                Tipo = "image/png",
+                Tamano = Png.Length,
+                Fecha = DateTime.Now,
+                Contenido = Png
+            };
+        }
+
         public Detalles_Pedidos Detalles_Pedidos()
         {
             var pedido = Guardar(this.conexion.Pedidos!, Pedidos());

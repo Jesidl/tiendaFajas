@@ -85,11 +85,12 @@ namespace pruebas_tiendaFajas.Comunicaciones
         }
 
         [TestMethod]
-        public void HayVeinticuatroClasesDePresentacion()
+        public void HayUnaClaseDePresentacionPorEntidad()
         {
             var clases = Clases();
 
-            Assert.HasCount(24, clases,
+            // 24 tablas del modelo mas Imagenes
+            Assert.HasCount(25, clases,
                 "se esperaba una clase de presentacion por entidad; se " +
                 "encontraron: " + string.Join(", ", clases.Select(x => x.Name)));
         }
