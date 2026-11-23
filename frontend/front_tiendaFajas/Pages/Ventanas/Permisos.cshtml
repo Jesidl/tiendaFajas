@@ -1,0 +1,162 @@
+@page
+@model PermisosModel
+@{
+    ViewData["Title"] = "Permisos";
+}
+<form method="post"
+    enctype="multipart/form-data">
+
+    <div class="text-center">
+        <h1 class="display-4">Permisos</h1>
+
+        <input type="submit"
+            value="Buscar"
+            class="btn btn-secondary"
+            asp-page-handler="BtBuscar"/>
+        <input type="submit"
+            value="Nuevo"
+            class="btn btn-secondary"
+            asp-page-handler="BtNuevo"/>
+        <input type="submit"
+            value="Guardar"
+            class="btn btn-secondary"
+            asp-page-handler="BtGuardar"/>
+        <input id="flModulo"
+            placeholder="Modulo"
+            asp-for="@Model.Filtro!.Modulo"/>
+
+        @if (ViewData.ContainsKey("Mensaje"))
+        {
+            @await Html.PartialAsync("../Emergentes/Mensajes.cshtml");
+        }
+
+        @if (Model.Formulario || Model.Borrar)
+        {
+            <input id="nmId"
+                type="hidden"
+                asp-for="@Model.Actual!.Id" />
+        }
+
+        @if (Model.Formulario)
+        {
+            <div>
+                <h3>Permisos</h3>
+
+                <label>
+                    Rol
+                </label>
+                <select id="nmRol"
+                    asp-for="@Model.Actual!.Rol"
+                    asp-items="@(new SelectList(Model.Roles, "Id", "Nombre"))">
+                </select>
+                <br />
+
+                <label>
+                    Modulo
+                </label>
+                <input id="nmModulo"
+                    asp-for="@Model.Actual!.Modulo" />
+                <br />
+
+                <label>
+                    Consultar
+                </label>
+                <input id="nmConsultar"
+                    asp-for="@Model.Actual!.Consultar" />
+                <br />
+
+                <label>
+                    Insertar
+                </label>
+                <input id="nmInsertar"
+                    asp-for="@Model.Actual!.Insertar" />
+                <br />
+
+                <label>
+                    Actualizar
+                </label>
+                <input id="nmActualizar"
+                    asp-for="@Model.Actual!.Actualizar" />
+                <br />
+
+                <label>
+                    Borrar
+                </label>
+                <input id="nmBorrar"
+                    asp-for="@Model.Actual!.Borrar" />
+                <br />
+
+            </div>
+        }
+
+        @if (Model.Borrar)
+        {
+            <div class="popup">
+                <div class="pp_del_inner">
+                    <h3>Mensaje</h3>
+
+                    <h4>
+                        ¿Desea borrar el registro?
+                    </h4>
+                    <h6>
+                        @Model.Actual!._Rol!.Nombre,
+                        @Model.Actual!.Modulo,
+                        @Model.Actual!.Consultar
+                    </h6>
+                    <input type="submit"
+                        value="Cancelar"
+                        class="btn btn-secondary"
+                        asp-page-handler="BtBuscar" />
+                    <input type="submit"
+                        value="Borrar"
+                        class="btn btn-secondary"
+                        asp-page-handler="BtBorrar" />
+                </div>
+            </div>
+        }
+
+        @if (!Model.Formulario)
+        {
+            <div class="containers_vn panel panel-default">
+                <table class="tb_data table table-striped table-bordered table-hover">
+                    <tr>
+                        <th>Rol</th>
+                        <th>Modulo</th>
+                        <th>Consultar</th>
+                        <th>Insertar</th>
+                        <th>Actualizar</th>
+                        <th>Borrar</th>
+                        <th>Acción</th>
+                    </tr>
+                    @if (Model != null && Model.Lista != null)
+                    {
+                        foreach (var elemento in Model.Lista)
+                        {
+                            <tr>
+                                <td>@elemento._Rol!.Nombre</td>
+                                <td>@elemento.Modulo</td>
+                                <td>@elemento.Consultar</td>
+                                <td>@elemento.Insertar</td>
+                                <td>@elemento.Actualizar</td>
+                                <td>@elemento.Borrar</td>
+                                <td>
+                                    <input type="submit"
+                                        value="Editar"
+                                        class="btn btn-secondary"
+                                        asp-page-handler="BtEditar"
+                                        asp-route-data="@elemento.Id" />
+                                    <input type="submit"
+                                        value="Borrar"
+                                        class="btn btn-secondary"
+                                        asp-page-handler="BtPregBorrar"
+                                        asp-route-data="@elemento.Id" />
+                                </td>
+                            </tr>
+                        }
+                    }
+                </table>
+            </div>
+        }
+
+    </div>
+</form>
