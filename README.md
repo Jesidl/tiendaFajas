@@ -220,6 +220,30 @@ En Visual Studio hay un perfil de arranque múltiple llamado
 > `backend/presentacion_tiendaFajas/implementaciones/Comunicaciones.cs`. Si se
 > cambia el puerto en `launchSettings.json`, hay que cambiarlo también ahí.
 
+### Publicar en IIS
+
+Para que la aplicación viva en una dirección fija y arranque con Windows, en
+lugar de depender de `dotnet run`, hay cinco scripts en
+[`despliegue/iis/`](despliegue/iis/) con su propio
+[README](despliegue/iis/README.md). Resumen:
+
+```powershell
+cd despliegue\iis
+.\1-instalar-iis.ps1      # administrador: activa IIS
+.\2-publicar.ps1          # compila en Release
+.\3-crear-sitios.ps1      # administrador: crea los sitios y grupos
+sqlcmd -S "localhost\SQLEXPRESS" -E -i 4-permisos-sql.sql
+.\5-verificar.ps1         # comprueba que todo responde
+```
+
+Los sitios quedan en los mismos puertos que en desarrollo (5250 y 5150), así que
+pasar a IIS no exige ningún cambio de código.
+
+> El paso 4 no es opcional. La cadena de conexión usa `Integrated Security`, y
+> bajo IIS el proceso corre como `IIS APPPOOL\tiendaFajas-servicio`, una cuenta
+> virtual que SQL Server no conoce. Sin ese inicio de sesión el sitio arranca,
+> responde, y toda consulta falla con `Error Comunicacion`.
+
 ### Credenciales iniciales
 
 | Correo | Contraseña | Rol |
