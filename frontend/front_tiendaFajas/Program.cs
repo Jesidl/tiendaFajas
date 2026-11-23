@@ -33,6 +33,10 @@ builder.Services.AddScoped<IRolesPresentacion, RolesPresentacion>();
 builder.Services.AddScoped<IUsuariosPresentacion, UsuariosPresentacion>();
 builder.Services.AddScoped<IPermisosPresentacion, PermisosPresentacion>();
 builder.Services.AddScoped<IAuditoriasPresentacion, AuditoriasPresentacion>();
+builder.Services.AddScoped<IImagenesPresentacion, ImagenesPresentacion>();
+
+// segundo canal hacia el servicio, para los archivos que no caben en JSON
+builder.Services.AddScoped<IArchivos, Archivos>();
 
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(options =>

@@ -104,3 +104,44 @@ body {
     border: 1px solid #f5c2c7;
     border-radius: 6px;
 }
+
+/* ------------------------------------------------------------------ */
+/* Galeria de imagenes de un producto                                  */
+/* ------------------------------------------------------------------ */
+.gl_imagenes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+    margin: 12px 0;
+}
+
+.gl_item {
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    padding: 8px;
+    width: 160px;
+    background-color: #fff;
+}
+
+/* el alto fijo evita que la tarjeta salte segun las proporciones del
+   archivo que subieron; object-fit recorta sin deformar */
+.gl_item img {
+    width: 100%;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 2px;
+    display: block;
+}
+
+.gl_pie {
+    font-size: .75rem;
+    color: #6c757d;
+    margin: 6px 0;
+    word-break: break-all;
+}
+
+.gl_vacia {
+    color: #6c757d;
+    font-style: italic;
+}

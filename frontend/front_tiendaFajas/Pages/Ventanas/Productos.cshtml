@@ -104,6 +104,68 @@
                 </select>
                 <br />
 
+                <hr />
+                <h4>Im&aacute;genes</h4>
+
+                @*
+                    El src apunta al servicio, no al front: el binario no pasa
+                    por este proceso. El navegador lo descarga con un GET, que
+                    es lo unico que sabe hacer una etiqueta img.
+                *@
+                @if (Model.Actual!.Id != 0)
+                {
+                    <div class="gl_imagenes">
+                        @if (Model.Imagenes != null && Model.Imagenes.Count > 0)
+                        {
+                            foreach (var imagen in Model.Imagenes)
+                            {
+                                <div class="gl_item">
+                                    <img src="@Model.UrlImagen(imagen.Id)"
+                                        alt="@imagen.Nombre"
+                                        title="@imagen.Nombre" />
+                                    <div class="gl_pie">
+                                        @imagen.Nombre
+                                        <br />
+                                        @(imagen.Tamano / 1024) KB
+                                    </div>
+                                    <input type="submit"
+                                        value="Quitar"
+                                        class="btn btn-secondary btn-sm"
+                                        asp-page-handler="BtBorrarImagen"
+                                        asp-route-data="@imagen.Id" />
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <p class="gl_vacia">
+                                Este producto todav&iacute;a no tiene im&aacute;genes.
+                            </p>
+                        }
+                    </div>
+
+                    <label>
+                        Archivo
+                    </label>
+                    <input id="nmArchivo"
+                        type="file"
+                        accept="image/png,image/jpeg,image/webp,image/gif"
+                        asp-for="Archivo" />
+                    <input type="submit"
+                        value="Subir imagen"
+                        class="btn btn-secondary"
+                        asp-page-handler="BtSubir" />
+                    <br />
+                    <small>PNG, JPEG, WEBP o GIF, hasta 4 MB.</small>
+                    <br />
+                }
+                else
+                {
+                    <p class="gl_vacia">
+                        Guarde el producto para poder subirle im&aacute;genes.
+                    </p>
+                }
+
             </div>
         }
 
