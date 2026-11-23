@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MSTest" Version="4.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- aplicacion: entidades, Conexion y nucleo, para las pruebas de Repositorios -->
+    <ProjectReference Include="..\aplicacion_tiendaFajas\aplicacion_tiendaFajas.csproj" />
+    <!-- presentacion: Comunicaciones y las 24 clases XPresentacion -->
+    <ProjectReference Include="..\presentacion_tiendaFajas\presentacion_tiendaFajas.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Using Include="Microsoft.VisualStudio.TestTools.UnitTesting" />
+  </ItemGroup>
+
+</Project>
