@@ -1,0 +1,157 @@
+@page
+@model VariantesModel
+@{
+    ViewData["Title"] = "Variantes";
+}
+<form method="post"
+    enctype="multipart/form-data">
+
+    <div class="text-center">
+        <h1 class="display-4">Variantes</h1>
+
+        <input type="submit"
+            value="Buscar"
+            class="btn btn-secondary"
+            asp-page-handler="BtBuscar"/>
+        <input type="submit"
+            value="Nuevo"
+            class="btn btn-secondary"
+            asp-page-handler="BtNuevo"/>
+        <input type="submit"
+            value="Guardar"
+            class="btn btn-secondary"
+            asp-page-handler="BtGuardar"/>
+        <input id="flSku"
+            placeholder="Sku"
+            asp-for="@Model.Filtro!.Sku"/>
+
+        @if (ViewData.ContainsKey("Mensaje"))
+        {
+            @await Html.PartialAsync("../Emergentes/Mensajes.cshtml");
+        }
+
+        @if (Model.Formulario || Model.Borrar)
+        {
+            <input id="nmId"
+                type="hidden"
+                asp-for="@Model.Actual!.Id" />
+        }
+
+        @if (Model.Formulario)
+        {
+            <div>
+                <h3>Variantes</h3>
+
+                <label>
+                    Sku
+                </label>
+                <input id="nmSku"
+                    asp-for="@Model.Actual!.Sku" />
+                <br />
+
+                <label>
+                    Producto
+                </label>
+                <select id="nmProducto"
+                    asp-for="@Model.Actual!.Producto"
+                    asp-items="@(new SelectList(Model.Productos, "Id", "Nombre"))">
+                </select>
+                <br />
+
+                <label>
+                    Talla
+                </label>
+                <select id="nmTalla"
+                    asp-for="@Model.Actual!.Talla"
+                    asp-items="@(new SelectList(Model.Tallas, "Id", "Nombre"))">
+                </select>
+                <br />
+
+                <label>
+                    Color
+                </label>
+                <select id="nmColor"
+                    asp-for="@Model.Actual!.Color"
+                    asp-items="@(new SelectList(Model.Colores, "Id", "Nombre"))">
+                </select>
+                <br />
+
+                <label>
+                    Precio Adicional
+                </label>
+                <input id="nmPrecio_Adicional"
+                    asp-for="@Model.Actual!.Precio_Adicional" />
+                <br />
+
+            </div>
+        }
+
+        @if (Model.Borrar)
+        {
+            <div class="popup">
+                <div class="pp_del_inner">
+                    <h3>Mensaje</h3>
+
+                    <h4>
+                        ¿Desea borrar el registro?
+                    </h4>
+                    <h6>
+                        @Model.Actual!.Sku,
+                        @Model.Actual!._Producto!.Nombre,
+                        @Model.Actual!._Talla!.Nombre
+                    </h6>
+                    <input type="submit"
+                        value="Cancelar"
+                        class="btn btn-secondary"
+                        asp-page-handler="BtBuscar" />
+                    <input type="submit"
+                        value="Borrar"
+                        class="btn btn-secondary"
+                        asp-page-handler="BtBorrar" />
+                </div>
+            </div>
+        }
+
+        @if (!Model.Formulario)
+        {
+            <div class="containers_vn panel panel-default">
+                <table class="tb_data table table-striped table-bordered table-hover">
+                    <tr>
+                        <th>Sku</th>
+                        <th>Producto</th>
+                        <th>Talla</th>
+                        <th>Color</th>
+                        <th>Precio Adicional</th>
+                        <th>Acción</th>
+                    </tr>
+                    @if (Model != null && Model.Lista != null)
+                    {
+                        foreach (var elemento in Model.Lista)
+                        {
+                            <tr>
+                                <td>@elemento.Sku</td>
+                                <td>@elemento._Producto!.Nombre</td>
+                                <td>@elemento._Talla!.Nombre</td>
+                                <td>@elemento._Color!.Nombre</td>
+                                <td>@elemento.Precio_Adicional</td>
+                                <td>
+                                    <input type="submit"
+                                        value="Editar"
+                                        class="btn btn-secondary"
+                                        asp-page-handler="BtEditar"
+                                        asp-route-data="@elemento.Id" />
+                                    <input type="submit"
+                                        value="Borrar"
+                                        class="btn btn-secondary"
+                                        asp-page-handler="BtPregBorrar"
+                                        asp-route-data="@elemento.Id" />
+                                </td>
+                            </tr>
+                        }
+                    }
+                </table>
+            </div>
+        }
+
+    </div>
+</form>
