@@ -16,12 +16,12 @@ una **API REST** en ASP.NET Core y un front en **Razor Pages**.
 |---|---|
 | **Catálogos** | Cargos, sucursales, categorías, marcas, materiales, tallas, colores y métodos de pago |
 | **Personas** | Clientes, proveedores, empleados y medidas corporales por cliente |
-| **Productos** | Productos, variantes (combinación de talla y color con su SKU) e inventario por sucursal |
+| **Productos** | Productos con sus fotografías, variantes (combinación de talla y color con su SKU) e inventario por sucursal |
 | **Ventas** | Ventas con detalle por variante y pagos por método |
 | **Compras** | Pedidos a proveedores con su detalle |
 | **Seguridad** | Usuarios, roles, permisos por módulo y auditoría de toda escritura |
 
-Son **24 tablas**, y cada una tiene su API REST completa y su pantalla de
+Son **25 tablas**, y cada una tiene su API REST completa y su pantalla de
 administración: insertar, actualizar, consultar, buscar y borrar.
 
 ---
@@ -50,10 +50,10 @@ por HTTP. El front nunca habla con la base de datos: solo manda y recibe JSON.
 | Proyecto | Tipo | Responsabilidad |
 |---|---|---|
 | `backend/aplicacion_tiendaFajas` | Librería | Entidades, reglas de negocio, `DbContext` y acceso a datos |
-| `backend/servicio_tiendaFajas` | Web API | 24 controladores, 120 endpoints |
+| `backend/servicio_tiendaFajas` | Web API | 25 controladores, 128 endpoints |
 | `backend/presentacion_tiendaFajas` | Librería | Cliente HTTP y una fachada por entidad |
-| `frontend/front_tiendaFajas` | Razor Pages | 24 pantallas de administración y el login |
-| `backend/pruebas_tiendaFajas` | MSTest | 49 pruebas |
+| `frontend/front_tiendaFajas` | Razor Pages | 24 pantallas de administración, el login y la galería de imágenes |
+| `backend/pruebas_tiendaFajas` | MSTest | 64 pruebas |
 
 Las dependencias van en cadena, nunca cruzadas:
 
@@ -73,7 +73,7 @@ mitad no obliga a reconstruir la otra.
 
 ## Modelo de datos
 
-24 tablas con integridad referencial declarada. El script completo está en
+25 tablas con integridad referencial declarada. El script completo está en
 [`backend/aplicacion_tiendaFajas/Script.sql`](backend/aplicacion_tiendaFajas/Script.sql).
 
 ```
@@ -85,7 +85,7 @@ Sucursales ──┐            │             └──► Pagos ──► Met
 Clientes ──┬─┼───────────────────┘ (vía Proveedores)
            └─┴──► Medidas
 
-Categorias ─┐
+Categorias ─┐           ┌──► Imagenes
 Marcas ─────┼──► Productos ──► Variantes ──┬──► Inventarios
 Materiales ─┘         Tallas ──┘           ├──► Detalles_Ventas
                       Colores ──┘          └──► Detalles_Pedidos
@@ -149,6 +149,40 @@ editar desde la interfaz no sirve como evidencia.
 
 ---
 
+## Imágenes de producto
+
+Cada producto puede tener varias fotografías. Se suben desde su propia pantalla
+y se guardan en SQL Server como `VARBINARY(MAX)`.
+
+**El binario no viaja por el canal JSON**, y esa es la decisión que explica todo
+lo demás. El cliente HTTP pasa cada respuesta del servicio por una cadena de
+reemplazos de texto que, entre otras cosas, sustituye `null` por una cadena
+vacía. Una imagen en base64 son miles de caracteres del alfabeto `A-Za-z0-9+/`,
+así que contiene esa subcadena casi con seguridad: llegaría corrupta, y con otro
+archivo el error no se reproduciría. Además base64 infla el tamaño un 33 %.
+
+De ahí salen cuatro consecuencias:
+
+| | |
+|---|---|
+| La columna `Contenido` lleva `[JsonIgnore]` | Nunca entra ni sale en JSON, en ninguna de las dos direcciones |
+| Hay un segundo canal, `IArchivos` | Sube el archivo con `multipart/form-data`, el formato que el navegador ya produce para un `<input type="file">` |
+| `Imagenes/Ver/{id}` es el único `GET` del servicio | Lo consume el `src` de una etiqueta `<img>`, que no sabe hacer `POST` |
+| Es una tabla aparte, no una columna en `Productos` | Un blob dentro de `Productos` se leería en cada consulta de productos aunque nadie pida la foto. Los listados usan una proyección que deja la columna fuera del `SELECT` |
+
+**El tipo del archivo se deduce de sus primeros bytes**, no del `Content-Type`
+que declara el cliente, por dos razones. La de fragilidad: un cliente HTTP
+cualquiera manda `application/octet-stream` para todo, y un PNG válido sería
+rechazado. La de seguridad: ese encabezado lo escribe quien sube el archivo, así
+que no prueba nada — si se guardara tal cual, el endpoint que sirve la imagen lo
+devolvería al navegador como cabecera, y alguien podría subir un HTML diciendo
+que es una imagen para que se sirviera como HTML desde este dominio. La respuesta
+lleva además `X-Content-Type-Options: nosniff`, para que el navegador respete el
+tipo que declaramos en lugar de adivinarlo.
+
+Se aceptan PNG, JPEG, WEBP y GIF hasta 4 MB. La regla vive en la capa de
+aplicación, no en el controlador, para que valga por cualquier vía de entrada.
+
 ## Requisitos
 
 - [.NET SDK 10.0](https://dotnet.microsoft.com/download) o superior
@@ -204,16 +238,17 @@ aplicación con `nucleo/Clave.Derivar`.
 dotnet test backend/pruebas_tiendaFajas
 ```
 
-**49 pruebas** en dos grupos:
+**64 pruebas** en tres grupos:
 
 | Carpeta | Qué prueba |
 |---|---|
-| `Repositorios/` | 24 pruebas, una por tabla: recorren el ciclo completo contra SQL Server y **leen de vuelta la fila** en cada paso. Más una del módulo de auditoría. |
-| `Comunicaciones/` | Recorre las 24 fachadas por reflexión con un doble en lugar del transporte: verifica que cada operación llame su propia URL y que las validaciones corten antes de salir a la red. |
+| `Repositorios/` | **31**: una por cada una de las 25 tablas, que recorren el ciclo completo contra SQL Server y **leen de vuelta la fila** en cada paso, más 6 del módulo de auditoría. |
+| `Comunicaciones/` | **22**: recorren las 25 fachadas por reflexión con un doble en lugar del transporte, verificando que cada operación llame su propia URL y que las validaciones corten antes de salir a la red. Incluye las que garantizan que el binario de una imagen nunca entre al canal JSON. |
+| `Dominio/` | **11**: reglas puras, sin base de datos ni red. La derivación de contraseñas y el reconocimiento de imágenes por firma de bytes. |
 
 Dos propiedades del diseño de las pruebas:
 
-- **No dependen de los datos que haya en la base.** 20 de las 24 tablas tienen
+- **No dependen de los datos que haya en la base.** 21 de las 25 tablas tienen
   claves foráneas, y una prueba de `Detalles_Ventas` necesita una venta, que
   necesita un cliente y un empleado, que necesitan una sucursal y un cargo.
   `Nucleo/EntidadesNucleo` crea y guarda esa cadena de padres, y la deshace en
@@ -226,13 +261,13 @@ Dos propiedades del diseño de las pruebas:
 
 ## Probar la API a mano
 
-Los 120 endpoints son `POST` con cuerpo JSON, **incluidos `Consultar` y
+Los endpoints son `POST` con cuerpo JSON, **incluidos `Consultar` y
 `Buscar`**. Desde la barra del navegador responden 405, porque el navegador manda
 `GET`. Hay dos archivos listos en `backend/servicio_tiendaFajas`:
 
 | Archivo | Cómo se usa |
 |---|---|
-| `tiendaFajas.postman_collection.json` | Se importa en Postman: 24 carpetas × 5 peticiones |
+| `tiendaFajas.postman_collection.json` | Se importa en Postman: 25 carpetas, 128 peticiones |
 | `servicio_tiendaFajas.http` | Se abre en Visual Studio, o en VS Code con la extensión *REST Client* |
 
 Los cuerpos de `Buscar` traen valores que coinciden con los datos semilla, así
@@ -262,15 +297,16 @@ tiendaFajas/
 │  │  ├─ nucleo/                        Clave, ContextoUsuario, conexión, log
 │  │  └─ Script.sql                      DDL + datos semilla
 │  ├─ servicio_tiendaFajas/
-│  │  ├─ Controllers/                   24 controladores
+│  │  ├─ Controllers/                   25 controladores
 │  │  └─ tiendaFajas.postman_collection.json
 │  ├─ presentacion_tiendaFajas/
 │  │  ├─ interfaces/                    IComunicaciones + 24 contratos
-│  │  └─ implementaciones/              Comunicaciones + 24 fachadas
+│  │  └─ implementaciones/              Comunicaciones, Archivos + 25 fachadas
 │  └─ pruebas_tiendaFajas/
 │     ├─ Nucleo/                        fábrica de datos y dobles de prueba
-│     ├─ Repositorios/                  25 pruebas
-│     └─ Comunicaciones/                24 pruebas
+│     ├─ Repositorios/                  31 pruebas
+│     ├─ Comunicaciones/                22 pruebas
+│     └─ Dominio/                       11 pruebas
 └─ frontend/
    └─ front_tiendaFajas/
       ├─ Pages/Ventanas/                24 pantallas
@@ -324,5 +360,8 @@ devuelve todo.
 - **Los permisos no se aplican todavía.** La tabla `Permisos` define qué puede
   hacer cada rol en cada módulo, pero las pantallas solo verifican que haya
   sesión: cualquier usuario autenticado entra a todo.
-- **Sin carga de imágenes.** Los productos no tienen fotografía.
+- **El servicio tiene que ser alcanzable desde el navegador** para que las
+  imágenes se vean: el atributo `src` apunta a `Imagenes/Ver/{id}` del servicio.
+  En un despliegue donde el servicio sea interno, hace falta una ruta en el front
+  que haga de intermediaria.
 - **La cadena de conexión está en el código**, no en `appsettings.json`.
